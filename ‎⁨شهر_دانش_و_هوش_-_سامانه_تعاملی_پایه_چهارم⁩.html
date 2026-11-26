@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>شهر دانش و هوش | آموزش تعاملی پایه چهارم</title>
+    <!-- فونت وزیرمتن -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Vazirmatn', 'sans-serif'],
+                    },
+                    colors: {
+                        skyGarden: '#e0f2fe',
+                        grassLight: '#dcfce7',
+                        grassMain: '#4ade80',
+                        grassDark: '#16a34a',
+                        sunGold: '#f59e0b',
+                        berryPurple: '#8b5cf6',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Vazirmatn', sans-serif;
+            background: linear-gradient(180deg, #bae6fd 0%, #e0f2fe 35%, #dcfce7 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* نمایش کسر استاندارد ریاضی */
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            margin: 0 5px;
+            font-weight: 800;
+            line-height: 1.15;
+            direction: ltr;
+        }
+        .fraction .num {
+            padding: 0 7px 2px 7px;
+            border-bottom: 2.5px solid currentColor;
+            min-width: 26px;
+            text-align: center;
+        }
+        .fraction .den {
+            padding: 3px 7px 0 7px;
+            min-width: 26px;
+            text-align: center;
+        }
+
+        /* انیمیشن حرکت نرم آدمک در باغ */
+        #garden-character {
+            transition: left 0.85s cubic-bezier(0.34, 1.56, 0.64, 1), top 0.85s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 25;
+        }
+
+        .character-walking {
+            animation: bounceWalk 0.3s infinite alternate;
+        }
+
+        @keyframes bounceWalk {
+            0% { transform: translate(-50%, -85%) rotate(-4deg) scale(1.03); }
+            100% { transform: translate(-50%, -95%) rotate(4deg) scale(1.03); }
+        }
+
+        .character-idle {
+            animation: gentleFloat 2.2s ease-in-out infinite;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translate(-50%, -85%); }
+            50% { transform: translate(-50%, -90%); }
+        }
+
+        /* انیمیشن درخشش درخت فعال */
+        .tree-active-pulse {
+            animation: treeGlow 1.6s infinite ease-in-out;
+        }
+
+        @keyframes treeGlow {
+            0%, 100% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 6px rgba(245, 158, 11, 0.7)); }
+            50% { transform: translate(-50%, -50%) scale(1.1); filter: drop-shadow(0 0 18px rgba(245, 158, 11, 1)); }
+        }
+
+        /* قطعات شکل هندسی تعاملی */
+        .geo-piece {
+            cursor: pointer;
+            transition: all 0.18s ease;
+        }
+        .geo-piece:hover {
+            opacity: 0.82;
+        }
+
+        /* انیمیشن ورود مودال‌ها */
+        .modal-pop {
+            animation: modalPop 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        @keyframes modalPop {
+            0% { opacity: 0; transform: scale(0.93) translateY(12px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        /* مخفی‌سازی اسکرول‌بار اضافی در پنل‌ها */
+        .custom-scroll::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .custom-scroll::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
+        }
+
+        @media print {
+            body { background: #fff !important; }
+            .no-print { display: none !important; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 flex flex-col justify-between selection:bg-amber-200 selection:text-amber-900">
+
+    <!-- ========================================================= -->
+    <!-- هدر اصلی سامانه                                           -->
+    <!-- ========================================================= -->
+    <header class="bg-white/90 backdrop-blur-md border-b-2 border-sky-200 sticky top-0 z-40 shadow-sm no-print">
+        <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between gap-2">
+            <!-- لوگو و عنوان -->
+            <div class="flex items-center gap-3">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-br from-emerald-500 via-teal-500 to-sky-500 text-white flex items-center justify-center shadow-md shadow-emerald-500/20">
+                    <!-- آیکون شهر دانش -->
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 3L2 9l10 6 10-6-10-6z"/>
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M2 15l10 6 10-6"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="font-black text-base sm:text-xl text-slate-800 tracking-tight">شهر دانش و هوش</h1>
+                    <p id="header-lesson-subtitle" class="text-xs font-bold text-emerald-600">پایه چهارم ابتدایی • ماجراجویی در باغ کسرها</p>
+                </div>
+            </div>
+
+            <!-- دکمه پنل مدیریت معلم و بازگشت -->
+            <div class="flex items-center gap-2">
+                <button id="btn-back-home" onclick="confirmReturnHome()" class="hidden px-3 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition cursor-pointer">
+                    🏠 صفحه شروع
+                </button>
+                <button onclick="openTeacherLogin()" class="px-3.5 py-2 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 border border-indigo-200 text-xs sm:text-sm font-extrabold transition flex items-center gap-1.5 cursor-pointer shadow-xs">
+                    <span>⚙️</span>
+                    <span>پنل مدیریت معلم</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ========================================================= -->
+    <!-- محتوای اصلی صفحات                                         -->
+    <!-- ========================================================= -->
+    <main class="flex-grow max-w-6xl w-full mx-auto px-3 sm:px-5 py-5 sm:py-7">
+
+        <!-- ===================================================== -->
+        <!-- بخش ۱: صفحه ورود دانش‌آموز (Login Screen)            -->
+        <!-- ===================================================== -->
+        <section id="screen-login" class="max-w-2xl mx-auto modal-pop">
+            <div class="bg-white/95 backdrop-blur-sm rounded-3xl shadow-xl shadow-sky-900/10 border-2 border-white p-6 sm:p-9 relative overflow-hidden">
+                <!-- تزئینات ابر و خورشید گوشه کارت -->
+                <div class="absolute -top-8 -left-8 w-28 h-28 bg-amber-300/30 rounded-full blur-xl pointer-events-none"></div>
+                <div class="absolute -bottom-8 -right-8 w-32 h-32 bg-emerald-300/30 rounded-full blur-xl pointer-events-none"></div>
+
+                <div class="text-center mb-7 relative">
+                    <span class="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-extrabold mb-3">
+                        <span>🌳</span>
+                        <span>بازی آموزشی و تعاملی پایه چهارم</span>
+                    </span>
+                    <h2 class="text-2xl sm:text-3xl font-black text-slate-800 mb-2">
+                        خوش آمدی به <span class="text-emerald-600">شهر دانش و هوش!</span>
+                    </h2>
+                    <p id="login-lesson-desc" class="text-sm sm:text-base text-slate-600 font-medium">
+                        شخصیت خودت رو انتخاب کن، وارد باغ شگفت‌انگیز شو و با حل معمای درخت‌ها ستاره جمع کن!
+                    </p>
+                </div>
+
+                <form onsubmit="startAdventure(event)" class="space-y-5 relative">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <!-- نام دانش‌آموز -->
+                        <div>
+                            <label for="input-student-name" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                                نام و نام خانوادگی: <span class="text-rose-500">*</span>
+                            </label>
+                            <input type="text" id="input-student-name" required placeholder="مثلاً: امیرعلی رضایی"
+                                class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/15 outline-none transition font-bold text-slate-800 bg-slate-50 focus:bg-white">
+                        </div>
+
+                        <!-- انتخاب کلاس -->
+                        <div>
+                            <label for="select-student-class" class="block text-sm font-extrabold text-slate-700 mb-1.5">
+                                کلاس:
+                            </label>
+                            <select id="select-student-class" onchange="handleClassSelectChange(this.value)"
+                                class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-emerald-500 focus:ring-4 focus:ring-emerald-500/15 outline-none transition font-bold text-slate-800 bg-slate-50 focus:bg-white">
+                                <option value="چهارم الف">چهارم الف</option>
+                                <option value="چهارم ب">چهارم ب</option>
+                                <option value="چهارم ج">چهارم ج</option>
+                                <option value="custom">سایر (نوشتن نام کلاس...)</option>
+                            </select>
+                            <input type="text" id="input-custom-class" placeholder="نام کلاس را بنویس..."
+                                class="hidden mt-2 w-full px-4 py-2.5 rounded-xl border-2 border-slate-200 focus:border-emerald-500 outline-none text-sm font-bold bg-white">
+                        </div>
+                    </div>
+
+                    <!-- انتخاب شخصیت پسر کارتونی -->
+                    <div>
+                        <label class="block text-sm font-extrabold text-slate-700 mb-2.5 text-center">
+                            قهرمان خودت را برای حرکت در باغ انتخاب کن:
+                        </label>
+                        <div class="grid grid-cols-3 gap-3 sm:gap-4" id="avatar-selector">
+                            <!-- آواتار ۱: آرش کاوشگر -->
+                            <button type="button" onclick="selectAvatar(0)" data-avatar-idx="0"
+                                class="avatar-card border-3 border-emerald-500 bg-emerald-50/70 rounded-2xl p-3 sm:p-4 text-center transition transform hover:scale-102 cursor-pointer shadow-sm">
+                                <div class="w-16 h-20 sm:w-20 sm:h-24 mx-auto mb-1.5" id="avatar-preview-0"></div>
+                                <div class="font-black text-xs sm:text-sm text-slate-800">آرش کاوشگر</div>
+                                <div class="text-[11px] text-emerald-700 font-bold">کلاه ماجراجو</div>
+                            </button>
+
+                            <!-- آواتار ۲: پارسا باهوش -->
+                            <button type="button" onclick="selectAvatar(1)" data-avatar-idx="1"
+                                class="avatar-card border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 sm:p-4 text-center transition transform hover:scale-102 cursor-pointer">
+                                <div class="w-16 h-20 sm:w-20 sm:h-24 mx-auto mb-1.5" id="avatar-preview-1"></div>
+                                <div class="font-black text-xs sm:text-sm text-slate-800">پارسا باهوش</div>
+                                <div class="text-[11px] text-sky-700 font-bold">عینک متفکر</div>
+                            </button>
+
+                            <!-- آواتار ۳: کیان قهرمان -->
+                            <button type="button" onclick="selectAvatar(2)" data-avatar-idx="2"
+                                class="avatar-card border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 sm:p-4 text-center transition transform hover:scale-102 cursor-pointer">
+                                <div class="w-16 h-20 sm:w-20 sm:h-24 mx-auto mb-1.5" id="avatar-preview-2"></div>
+                                <div class="font-black text-xs sm:text-sm text-slate-800">کیان قهرمان</div>
+                                <div class="text-[11px] text-amber-700 font-bold">شنل سرعت</div>
+                            </button>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        class="w-full py-4 px-6 rounded-2xl bg-gradient-to-l from-emerald-600 via-green-500 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white font-black text-base sm:text-lg shadow-lg shadow-emerald-600/30 transition transform active:scale-[0.98] flex items-center justify-center gap-2 cursor-pointer">
+                        <span>شروع ماجراجویی در باغ</span>
+                        <span class="text-xl">🚀</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- ===================================================== -->
+        <!-- بخش ۲: محیط بازی باغ اصلی (Main Garden Map)          -->
+        <!-- ===================================================== -->
+        <section id="screen-garden" class="hidden space-y-4 modal-pop">
+
+            <!-- نوار وضعیت بالای باغ (HUD) -->
+            <div class="bg-white/95 backdrop-blur-md rounded-3xl shadow-md border-2 border-emerald-100 p-3.5 sm:p-4">
+                <div class="flex flex-wrap items-center justify-between gap-3">
+                    <!-- اطلاعات دانش‌آموز -->
+                    <div class="flex items-center gap-2.5">
+                        <div id="hud-avatar-mini" class="w-10 h-10 rounded-xl bg-emerald-100 border border-emerald-300 flex items-center justify-center overflow-hidden p-0.5"></div>
+                        <div>
+                            <div id="hud-student-name" class="font-black text-sm text-slate-800">-</div>
+                            <div id="hud-student-class" class="text-xs font-bold text-slate-500">-</div>
+                        </div>
+                    </div>
+
+                    <!-- آمار بازی: ستاره، پاداش متوالی، تایمر -->
+                    <div class="flex flex-wrap items-center gap-2 sm:gap-3">
+                        <!-- ستاره‌ها و امتیاز -->
+                        <div class="flex items-center gap-1.5 bg-amber-50 border border-amber-200 px-3 py-1.5 rounded-2xl">
+                            <span class="text-base">⭐</span>
+                            <span class="text-xs font-bold text-amber-800">ستاره:</span>
+                            <span id="hud-stars" class="font-black text-sm text-amber-600">۰ / ۱۰</span>
+                        </div>
+
+                        <!-- پاداش پاسخ‌های درست متوالی (Streak) -->
+                        <div id="hud-streak-box" class="flex items-center gap-1.5 bg-orange-50 border border-orange-200 px-3 py-1.5 rounded-2xl transition-all">
+                            <span class="text-base">🔥</span>
+                            <span class="text-xs font-bold text-orange-800">متوالی:</span>
+                            <span id="hud-streak" class="font-black text-sm text-orange-600">۰</span>
+                        </div>
+
+                        <!-- امتیاز کل -->
+                        <div class="flex items-center gap-1.5 bg-purple-50 border border-purple-200 px-3 py-1.5 rounded-2xl">
+                            <span class="text-base">💎</span>
+                            <span class="text-xs font-bold text-purple-800">امتیاز:</span>
+                            <span id="hud-points" class="font-black text-sm text-purple-700">۰</span>
+                        </div>
+
+                        <!-- تایمر کل -->
+                        <div class="flex items-center gap-1.5 bg-sky-50 border border-sky-200 px-3 py-1.5 rounded-2xl">
+                            <span class="text-base">⏱️</span>
+                            <span id="hud-timer" class="font-black text-sm text-sky-700 dir-ltr">۰۰:۰۰</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- نوار پیشرفت باغ -->
+                <div class="mt-3 pt-2.5 border-t border-slate-100 flex items-center gap-3">
+                    <span id="hud-progress-label" class="text-xs font-extrabold text-emerald-700 whitespace-nowrap">پیشرفت: ۰ از ۱۰ درخت</span>
+                    <div class="flex-grow bg-slate-100 h-3 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                        <div id="hud-progress-bar" class="bg-gradient-to-l from-emerald-500 to-amber-400 h-full rounded-full transition-all duration-500" style="width: 0%"></div>
+                    </div>
+                    <button id="btn-early-report" onclick="finishAdventure()" class="hidden px-3 py-1 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-extrabold transition cursor-pointer">
+                        مشاهده کارنامه 🏆
+                    </button>
+                </div>
+            </div>
+
+            <!-- نقشه گرافیکی تعاملی باغ (Interactive Garden Canvas) -->
+            <div class="relative w-full rounded-3xl shadow-xl border-4 border-white overflow-hidden select-none bg-gradient-to-b from-sky-200 via-emerald-100 to-green-200"
+                 style="min-height: 490px; height: 62vh; max-height: 620px;">
+
+                <!-- پس‌زمینه کارتونی SVG باغ: آسمان، خورشید، ابرها، تپه‌ها و مسیر مارپیچ -->
+                <svg viewBox="0 0 1000 600" preserveAspectRatio="none" class="absolute inset-0 w-full h-full pointer-events-none">
+                    <defs>
+                        <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#7dd3fc"/>
+                            <stop offset="45%" stop-color="#e0f2fe"/>
+                            <stop offset="46%" stop-color="#86efac"/>
+                            <stop offset="100%" stop-color="#4ade80"/>
+                        </linearGradient>
+                        <linearGradient id="hillBack" x1="0" y1="0" x2="0" y2="1">
+                            <stop offset="0%" stop-color="#4ade80"/>
+                            <stop offset="100%" stop-color="#22c55e"/>
+                        </linearGradient>
+                    </defs>
+
+                    <!-- آسمان و چمن پایه -->
+                    <rect width="1000" height="600" fill="url(#skyGrad)"/>
+
+                    <!-- خورشید خندان -->
+                    <g transform="translate(890, 75)">
+                        <circle cx="0" cy="0" r="42" fill="#fde047" opacity="0.4"/>
+                        <circle cx="0" cy="0" r="30" fill="#facc15"/>
+                        <circle cx="-9" cy="-5" r="3" fill="#854d0e"/>
+                        <circle cx="9" cy="-5" r="3" fill="#854d0e"/>
+                        <path d="M -8 7 Q 0 15 8 7" stroke="#854d0e" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                    </g>
+
+                    <!-- ابرهای کارتونی -->
+                    <g fill="#ffffff" opacity="0.85">
+                        <path d="M120 75 Q135 50 165 60 Q190 45 215 65 Q240 65 240 85 Q240 100 215 100 L125 100 Q105 100 105 85 Q105 75 120 75 Z"/>
+                        <path d="M470 55 Q485 35 510 45 Q535 30 555 50 Q575 50 575 68 Q575 80 555 80 L475 80 Q455 80 455 68 Q455 55 470 55 Z"/>
+                    </g>
+
+                    <!-- تپه‌های سبز پس‌زمینه -->
+                    <path d="M 0 230 Q 250 150 520 220 T 1000 190 L 1000 600 L 0 600 Z" fill="url(#hillBack)" opacity="0.65"/>
+                    <path d="M 0 290 Q 340 220 680 280 T 1000 250 L 1000 600 L 0 600 Z" fill="#86efac" opacity="0.8"/>
+
+                    <!-- برکه کوچک آبی در گوشه باغ -->
+                    <ellipse cx="110" cy="510" rx="85" ry="38" fill="#38bdf8" stroke="#bae6fd" stroke-width="4"/>
+                    <ellipse cx="100" cy="505" rx="55" ry="20" fill="#7dd3fc" opacity="0.6"/>
+
+                    <!-- مسیر خاکی/سنگی مارپیچ اتصال ۱۰ درخت -->
+                    <path id="garden-trail-shadow"
+                          d="M 880 495 C 820 495, 760 470, 720 440 C 660 395, 580 460, 500 465 C 400 470, 310 420, 230 385 C 160 355, 190 285, 290 275 C 400 265, 480 315, 580 305 C 680 295, 770 250, 820 215 C 860 185, 780 145, 660 150 C 530 155, 420 175, 280 165"
+                          fill="none" stroke="#b45309" stroke-width="34" stroke-linecap="round" opacity="0.35"/>
+
+                    <path id="garden-trail"
+                          d="M 880 495 C 820 495, 760 470, 720 440 C 660 395, 580 460, 500 465 C 400 470, 310 420, 230 385 C 160 355, 190 285, 290 275 C 400 265, 480 315, 580 305 C 680 295, 770 250, 820 215 C 860 185, 780 145, 660 150 C 530 155, 420 175, 280 165"
+                          fill="none" stroke="#fef3c7" stroke-width="26" stroke-linecap="round" stroke-dasharray="1 0"/>
+
+                    <path
+                          d="M 880 495 C 820 495, 760 470, 720 440 C 660 395, 580 460, 500 465 C 400 470, 310 420, 230 385 C 160 355, 190 285, 290 275 C 400 265, 480 315, 580 305 C 680 295, 770 250, 820 215 C 860 185, 780 145, 660 150 C 530 155, 420 175, 280 165"
+                          fill="none" stroke="#f59e0b" stroke-width="3" stroke-linecap="round" stroke-dasharray="10 12" opacity="0.7"/>
+
+                    <!-- گل‌ها و بوته‌های تزئینی -->
+                    <g fill="#f43f5e">
+                        <circle cx="620" cy="530" r="5"/><circle cx="628" cy="535" r="4" fill="#fbbf24"/>
+                        <circle cx="380" cy="525" r="5"/><circle cx="388" cy="520" r="4" fill="#a855f7"/>
+                        <circle cx="890" cy="340" r="5"/><circle cx="897" cy="346" r="4" fill="#fbbf24"/>
+                    </g>
+                </svg>
+
+                <!-- لایه درخت‌های ۱۰ مرحله (به صورت پویا در مختصات مسیر قرار می‌گیرند) -->
+                <div id="garden-trees-layer" class="absolute inset-0 w-full h-full"></div>
+
+                <!-- کاراکتر پسر کارتونی متحرک در باغ -->
+                <div id="garden-character" class="absolute w-14 h-20 sm:w-16 sm:h-24 pointer-events-none character-idle" style="left: 91%; top: 84%;">
+                    <!-- SVG آواتار انتخابی اینجا تزریق می‌شود -->
+                </div>
+
+                <!-- راهنمای کارتونی باغ (جغد دانای شهر دانش) -->
+                <div class="absolute bottom-3 right-3 sm:bottom-4 sm:right-4 z-30 max-w-[270px] sm:max-w-xs flex items-end gap-2">
+                    <!-- آواتار جغد دانا -->
+                    <div class="w-14 h-14 sm:w-16 sm:h-16 shrink-0 bg-amber-100 rounded-2xl border-2 border-amber-400 shadow-lg flex items-center justify-center p-1">
+                        <svg viewBox="0 0 80 80" class="w-full h-full">
+                            <!-- بدن جغد -->
+                            <ellipse cx="40" cy="48" rx="24" ry="26" fill="#92400e"/>
+                            <ellipse cx="40" cy="52" rx="16" ry="18" fill="#fef3c7"/>
+                            <!-- بال‌ها -->
+                            <path d="M16 42 Q8 55 20 66" fill="#78350f"/>
+                            <path d="M64 42 Q72 55 60 66" fill="#78350f"/>
+                            <!-- چشم‌های درشت عینکی -->
+                            <circle cx="31" cy="33" r="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+                            <circle cx="49" cy="33" r="10" fill="#ffffff" stroke="#f59e0b" stroke-width="2.5"/>
+                            <line x1="39" y1="33" x2="41" y2="33" stroke="#f59e0b" stroke-width="2.5"/>
+                            <circle cx="32" cy="33" r="4" fill="#1e293b"/>
+                            <circle cx="48" cy="33" r="4" fill="#1e293b"/>
+                            <!-- منقار -->
+                            <polygon points="37,40 43,40 40,46" fill="#f97316"/>
+                            <!-- کلاه فارغ‌التحصیلی -->
+                            <polygon points="40,10 18,19 40,26 62,19" fill="#1e293b"/>
+                            <rect x="30" y="21" width="20" height="5" fill="#334155"/>
+                            <line x1="58" y1="20" x2="62" y2="30" stroke="#facc15" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <!-- حباب گفتگوی راهنما -->
+                    <div class="bg-white/95 backdrop-blur-sm border-2 border-amber-300 rounded-2xl rounded-br-none p-2.5 sm:p-3 shadow-lg text-xs sm:text-sm font-bold text-slate-700 leading-snug">
+                        <div class="text-[11px] font-black text-amber-600 mb-0.5">🦉 جغد دانا می‌گوید:</div>
+                        <p id="garden-guide-text">روی درخت شماره ۱ که می‌درخشد کلیک کن تا ماجراجویی شروع شود!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================== -->
+        <!-- بخش ۳: پنجره تعاملی پاسخ به سؤال (Question Modal)     -->
+        <!-- ===================================================== -->
+        <div id="question-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-xs z-50 hidden items-center justify-center p-2.5 sm:p-4 overflow-y-auto">
+            <div class="bg-white rounded-3xl max-w-3xl w-full shadow-2xl border-4 border-emerald-200 overflow-hidden my-auto modal-pop">
+                <!-- نوار بالای پنجره سؤال -->
+                <div class="bg-gradient-to-l from-emerald-600 to-teal-600 text-white px-5 py-3.5 flex items-center justify-between gap-2">
+                    <div class="flex items-center gap-2.5">
+                        <span id="modal-tree-badge" class="w-9 h-9 rounded-xl bg-white/20 flex items-center justify-center font-black text-base">🌳 ۱</span>
+                        <div>
+                            <h3 id="modal-question-title" class="font-black text-sm sm:text-base">معمای درخت شماره ۱</h3>
+                            <span id="modal-question-type" class="text-[11px] text-emerald-100 font-bold">نوع سؤال</span>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2.5">
+                        <div class="bg-black/20 px-3 py-1 rounded-xl text-xs font-extrabold flex items-center gap-1">
+                            <span>⏱️</span>
+                            <span id="modal-timer" class="dir-ltr">۰۰:۰۰</span>
+                        </div>
+                        <button onclick="closeQuestionModal()" class="w-8 h-8 rounded-xl bg-white/15 hover:bg-white/30 flex items-center justify-center font-bold text-sm transition cursor-pointer" title="بازگشت به باغ">
+                            ✕
+                        </button>
+                    </div>
+                </div>
+
+                <!-- نوار پیشرفت داخل مودال -->
+                <div class="w-full bg-slate-100 h-2">
+                    <div id="modal-progress-bar" class="bg-amber-400 h-full transition-all duration-300" style="width: 10%"></div>
+                </div>
+
+                <!-- بدنه سؤال -->
+                <div class="p-5 sm:p-7 space-y-5 max-h-[82vh] overflow-y-auto custom-scroll">
+                    <!-- باکس راهنمای کارتونی داخل سؤال -->
+                    <div class="bg-amber-50 border border-amber-200 rounded-2xl p-3 flex items-center gap-3">
+                        <span class="text-2xl shrink-0">🦉</span>
+                        <p id="modal-guide-hint" class="text-xs sm:text-sm font-bold text-amber-900">
+                            با دقت صورت سؤال را بخوان و پاسخ درست را انتخاب کن!
+                        </p>
+                    </div>
+
+                    <!-- متن سؤال -->
+                    <div id="modal-question-prompt" class="text-base sm:text-xl font-extrabold text-slate-800 leading-relaxed">
+                        <!-- صورت سؤال -->
+                    </div>
+
+                    <!-- ناحیه تعاملی پاسخ‌دهی -->
+                    <div id="modal-interaction-area" class="pt-1">
+                        <!-- گزینه‌ها / جای خالی / شکل هندسی -->
+                    </div>
+
+                    <!-- کادر بازخورد فوری پس از ثبت پاسخ -->
+                    <div id="modal-feedback-box" class="hidden rounded-2xl p-4 border-2">
+                        <div class="flex items-start gap-3">
+                            <span id="modal-feedback-icon" class="text-2xl">🎉</span>
+                            <div>
+                                <h4 id="modal-feedback-title" class="font-black text-sm sm:text-base mb-1">عنوان</h4>
+                                <p id="modal-feedback-desc" class="text-xs sm:text-sm leading-relaxed font-medium"></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- دکمه‌های پایین مودال -->
+                    <div class="flex items-center justify-end gap-3 pt-3 border-t border-slate-100">
+                        <button id="btn-submit-answer" onclick="submitTreeAnswer()"
+                            class="w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-l from-emerald-600 to-teal-500 hover:from-emerald-700 hover:to-teal-600 text-white font-black text-sm sm:text-base shadow-lg shadow-emerald-600/25 transition cursor-pointer">
+                            ✅ ثبت پاسخ و بررسی
+                        </button>
+
+                        <button id="btn-continue-garden" onclick="continueToNextTree()"
+                            class="hidden w-full sm:w-auto px-7 py-3.5 rounded-2xl bg-gradient-to-l from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-black text-sm sm:text-base shadow-lg shadow-amber-500/25 transition cursor-pointer">
+                            🌳 ادامه مسیر در باغ ⬅️
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- بخش ۴: کارنامه تحلیلی جامع (Analytical Report)        -->
+        <!-- ===================================================== -->
+        <section id="screen-report" class="hidden space-y-6 modal-pop">
+            <div class="bg-white rounded-3xl shadow-xl border-2 border-emerald-200 overflow-hidden">
+                <!-- سربرگ کارنامه -->
+                <div class="bg-gradient-to-l from-emerald-600 via-teal-600 to-sky-600 text-white p-6 sm:p-8 text-center">
+                    <div class="w-16 h-16 rounded-2xl bg-white/20 backdrop-blur-xs mx-auto mb-3 flex items-center justify-center text-4xl shadow-inner">
+                        🏆
+                    </div>
+                    <h2 class="text-2xl sm:text-3xl font-black mb-1">کارنامه تحلیلی شهر دانش و هوش</h2>
+                    <p id="report-lesson-title" class="text-emerald-100 text-xs sm:text-sm font-bold mb-4">مبحث جمع کسرها • پایه چهارم ابتدایی</p>
+
+                    <div class="inline-flex flex-wrap items-center justify-center gap-4 bg-black/20 px-5 py-2.5 rounded-2xl text-xs sm:text-sm font-bold">
+                        <span>دانش‌آموز: <strong id="rep-student-name" class="text-amber-300">-</strong></span>
+                        <span>کلاس: <strong id="rep-student-class" class="text-amber-300">-</strong></span>
+                        <span>تاریخ: <strong id="rep-date" class="text-amber-300">-</strong></span>
+                    </div>
+                </div>
+
+                <div class="p-5 sm:p-8 space-y-6">
+                    <!-- کارت‌های آمار عملکرد -->
+                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-3">
+                        <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-3.5 text-center">
+                            <div class="text-xs font-bold text-emerald-700 mb-1">نمره از ۲۰</div>
+                            <div id="rep-score-20" class="text-2xl sm:text-3xl font-black text-emerald-700">۲۰</div>
+                        </div>
+                        <div class="bg-sky-50 border-2 border-sky-200 rounded-2xl p-3.5 text-center">
+                            <div class="text-xs font-bold text-sky-700 mb-1">درصد موفقیت</div>
+                            <div id="rep-percent" class="text-2xl sm:text-3xl font-black text-sky-700">۱۰۰٪</div>
+                        </div>
+                        <div class="bg-green-50 border-2 border-green-200 rounded-2xl p-3.5 text-center">
+                            <div class="text-xs font-bold text-green-700 mb-1">پاسخ صحیح</div>
+                            <div id="rep-correct" class="text-2xl font-black text-green-700">۱۰</div>
+                        </div>
+                        <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-3.5 text-center">
+                            <div class="text-xs font-bold text-rose-700 mb-1">پاسخ غلط</div>
+                            <div id="rep-wrong" class="text-2xl font-black text-rose-700">۰</div>
+                        </div>
+                        <div class="col-span-2 sm:col-span-1 bg-amber-50 border-2 border-amber-200 rounded-2xl p-3.5 text-center">
+                            <div class="text-xs font-bold text-amber-800 mb-1">زمان و امتیاز</div>
+                            <div id="rep-time-points" class="text-sm sm:text-base font-black text-amber-700 mt-1">۰۰:۰۰ | ۰💎</div>
+                        </div>
+                    </div>
+
+                    <!-- تحلیل نقاط ضعف و درخت‌های نیازمند تمرین -->
+                    <div id="rep-weakness-box" class="rounded-2xl p-4 sm:p-5 border-2">
+                        <!-- به صورت داینامیک پر می‌شود -->
+                    </div>
+
+                    <!-- دکمه‌های اشتراک‌گذاری (کپی کارنامه و ارسال با ایمیل به معلم) -->
+                    <div class="bg-slate-50 border-2 border-slate-200 rounded-2xl p-4 sm:p-5 space-y-4 no-print">
+                        <h4 class="font-black text-sm sm:text-base text-slate-800 flex items-center gap-2">
+                            <span>📤</span>
+                            <span>ارسال کارنامه به معلم</span>
+                        </h4>
+
+                        <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
+                            <button onclick="copyReportText()"
+                                class="flex-1 py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition flex items-center justify-center gap-2 cursor-pointer">
+                                <span>📋</span>
+                                <span>کپی متن کارنامه (برای شاد، ایتا، بله...)</span>
+                            </button>
+
+                            <div class="flex-1 flex items-center gap-2">
+                                <input type="email" id="input-teacher-email" placeholder="ایمیل معلم (اختیاری)"
+                                    class="w-full px-3 py-2.5 rounded-xl border-2 border-slate-200 focus:border-sky-500 outline-none text-xs sm:text-sm font-bold bg-white dir-ltr text-left">
+                                <button onclick="sendReportEmail()"
+                                    class="shrink-0 py-2.5 px-4 rounded-xl bg-sky-600 hover:bg-sky-700 text-white font-extrabold text-xs sm:text-sm transition flex items-center gap-1.5 cursor-pointer">
+                                    <span>✉️</span>
+                                    <span>ارسال ایمیل</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="flex flex-wrap items-center justify-between gap-2 pt-2 border-t border-slate-200">
+                            <button onclick="window.print()" class="px-4 py-2 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 font-bold text-xs transition cursor-pointer">
+                                🖨️ چاپ کارنامه
+                            </button>
+                            <button onclick="restartAdventure()" class="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-600 text-white font-extrabold text-xs sm:text-sm shadow-sm transition cursor-pointer">
+                                🔄 شروع مجدد ماجراجویی
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- پاسخنامه کاملاً تشریحی تمام ۱۰ سؤال -->
+            <div class="space-y-4">
+                <h3 class="text-lg sm:text-xl font-black text-slate-800 px-1 flex items-center gap-2">
+                    <span>📖</span>
+                    <span>پاسخنامه کاملاً تشریحی تمام مراحل</span>
+                </h3>
+                <div id="rep-detailed-list" class="space-y-4">
+                    <!-- کارت‌های تشریحی هر ۱۰ درخت -->
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- فوتر -->
+    <footer class="text-center py-4 text-xs font-bold text-slate-600 no-print">
+        سامانه تعاملی شهر دانش و هوش • ویژه دانش‌آموزان پایه چهارم ابتدایی 🌱
+    </footer>
+
+    <!-- ========================================================= -->
+    <!-- مودال ورود و پنل مدیریت معلم (Teacher Admin Panel)        -->
+    <!-- ========================================================= -->
+    <div id="teacher-modal" class="fixed inset-0 bg-slate-900/65 backdrop-blur-xs z-50 hidden items-center justify-center p-2.5 sm:p-5 overflow-y-auto">
+        <div class="bg-white rounded-3xl max-w-4xl w-full shadow-2xl border-2 border-indigo-200 overflow-hidden my-auto modal-pop">
+            <!-- هدر پنل معلم -->
+            <div class="bg-indigo-700 text-white px-5 py-4 flex items-center justify-between">
+                <div class="flex items-center gap-2.5">
+                    <span class="text-2xl">👨‍🏫</span>
+                    <div>
+                        <h3 class="font-black text-base sm:text-lg">پنل مدیریت و ویرایش سؤالات معلم</h3>
+                        <p class="text-xs text-indigo-200">ساخت، ویرایش، حذف و سفارشی‌سازی آزمون</p>
+                    </div>
+                </div>
+                <button onclick="closeTeacherModal()" class="w-9 h-9 rounded-xl bg-white/15 hover:bg-white/30 flex items-center justify-center font-bold transition cursor-pointer">
+                    ✕
+                </button>
+            </div>
+
+            <!-- بخش ۱: فرم ورود با رمز 1234 -->
+            <div id="teacher-auth-view" class="p-8 max-w-md mx-auto text-center space-y-4">
+                <div class="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 mx-auto flex items-center justify-center text-3xl border border-indigo-200">
+                    🔐
+                </div>
+                <h4 class="font-black text-lg text-slate-800">ورود به بخش مدیریت</h4>
+                <p class="text-xs sm:text-sm text-slate-600">لطفاً رمز عبور پنل معلم را وارد کنید (رمز آزمایشی: <strong class="text-indigo-700 font-black">1234</strong>):</p>
+                <form onsubmit="verifyTeacherPassword(event)" class="space-y-3">
+                    <input type="password" id="input-teacher-pass" placeholder="رمز عبور..." required
+                        class="w-full px-4 py-3 rounded-2xl border-2 border-slate-200 focus:border-indigo-500 outline-none text-center font-black text-lg tracking-widest dir-ltr">
+                    <button type="submit" class="w-full py-3 rounded-2xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-sm shadow-md transition cursor-pointer">
+                        ورود به پنل مدیریت
+                    </button>
+                </form>
+            </div>
+
+            <!-- بخش ۲: داشبورد مدیریت سؤالات -->
+            <div id="teacher-dashboard-view" class="hidden p-5 sm:p-6 space-y-5 max-h-[82vh] overflow-y-auto custom-scroll">
+                <!-- تنظیم عنوان درس/آزمون -->
+                <div class="bg-indigo-50/70 border border-indigo-200 rounded-2xl p-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+                    <div class="flex-grow">
+                        <label class="block text-xs font-extrabold text-indigo-900 mb-1">عنوان مبحث / درس فعلی:</label>
+                        <input type="text" id="admin-lesson-title"
+                            class="w-full px-3.5 py-2 rounded-xl border border-indigo-300 bg-white font-bold text-sm text-slate-800 outline-none focus:border-indigo-600">
+                    </div>
+                    <div class="flex flex-wrap items-center gap-2 pt-2 sm:pt-5">
+                        <button onclick="saveAdminLessonTitle()" class="px-4 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-xs transition cursor-pointer">
+                            💾 ذخیره عنوان
+                        </button>
+                        <button onclick="exportQuestionsJSON()" class="px-3.5 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs transition cursor-pointer">
+                            📋 کپی کد سؤالات
+                        </button>
+                        <button onclick="resetDefaultQuestions()" class="px-3.5 py-2 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 font-bold text-xs transition cursor-pointer">
+                            🔄 بازگردانی پیش‌فرض
+                        </button>
+                    </div>
+                </div>
+
+                <!-- نوار افزودن سؤال جدید -->
+                <div class="flex items-center justify-between">
+                    <h4 id="admin-questions-count" class="font-black text-base text-slate-800">لیست سؤالات آزمون (۱۰ سؤال)</h4>
+                    <button onclick="openQuestionEditor(-1)" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-extrabold text-xs sm:text-sm shadow-sm transition flex items-center gap-1.5 cursor-pointer">
+                        <span>➕</span>
+                        <span>افزودن سؤال جدید</span>
+                    </button>
+                </div>
+
+                <!-- فرم افزودن / ویرایش یک سؤال (مخفی تا زمان کلیک روی ویرایش/افزودن) -->
+                <div id="admin-editor-box" class="hidden bg-slate-50 border-2 border-indigo-300 rounded-2xl p-4 sm:p-5 space-y-4">
+                    <div class="flex items-center justify-between border-b border-slate-200 pb-2.5">
+                        <h5 id="admin-editor-heading" class="font-black text-sm sm:text-base text-indigo-800">ویرایش سؤال</h5>
+                        <button onclick="closeQuestionEditor()" class="text-xs font-bold text-slate-500 hover:text-slate-800 cursor-pointer">انصراف ✕</button>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-700 mb-1">نوع سؤال:</label>
+                            <select id="edit-q-type" onchange="renderAdminTypeFields()" class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white font-bold text-sm">
+                                <option value="mcq">چهارگزینه‌ای (MCQ)</option>
+                                <option value="fill">کامل‌کردنی (صورت و مخرج کسر)</option>
+                                <option value="shape">کار با اشکال هندسی تعاملی (دایره / مستطیل)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-extrabold text-slate-700 mb-1">راهنمای کوتاه جغد دانا:</label>
+                            <input type="text" id="edit-q-hint" placeholder="مثلاً: در جمع کسرهای هم‌مخرج، مخرج تغییر نمی‌کند."
+                                class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white font-medium text-sm">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 mb-1">متن صورت سؤال:</label>
+                        <textarea id="edit-q-prompt" rows="2" placeholder="متن سؤال را اینجا بنویسید..."
+                            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white font-bold text-sm"></textarea>
+                    </div>
+
+                    <!-- فیلدهای اختصاصی بر اساس نوع سؤال -->
+                    <div id="edit-q-dynamic-fields" class="bg-white p-3.5 rounded-xl border border-slate-200 space-y-3">
+                        <!-- داینامیک -->
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-extrabold text-slate-700 mb-1">توضیح کاملاً تشریحی پاسخ (نمایش در کارنامه):</label>
+                        <textarea id="edit-q-explanation" rows="2" placeholder="توضیح گام‌به‌گام حل سؤال برای دانش‌آموز..."
+                            class="w-full px-3 py-2 rounded-xl border border-slate-300 bg-white font-medium text-sm"></textarea>
+                    </div>
+
+                    <div class="flex justify-end gap-2">
+                        <button onclick="closeQuestionEditor()" class="px-4 py-2 rounded-xl bg-slate-200 text-slate-700 font-bold text-xs cursor-pointer">انصراف</button>
+                        <button onclick="saveEditedQuestion()" class="px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-extrabold text-xs sm:text-sm cursor-pointer">
+                            ✅ ذخیره سؤال
+                        </button>
+                    </div>
+                </div>
+
+                <!-- جدول/لیست سؤالات موجود -->
+                <div id="admin-questions-list" class="space-y-2.5">
+                    <!-- کارت‌های سؤالات در پنل معلم -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- اعلان شناور (Toast) -->
+    <div id="toast-box" class="fixed bottom-5 left-1/2 -translate-x-1/2 bg-slate-900 text-white px-5 py-3 rounded-2xl shadow-2xl text-xs sm:text-sm font-bold z-50 transition-all duration-300 opacity-0 pointer-events-none">
+        پیام
+    </div>
+
+    <!-- ========================================================= -->
+    <!-- اسکریپت منطق بازی، بانک سؤالات، کارنامه و پنل معلم        -->
+    <!-- ========================================================= -->
+    <script>
+        // ==========================================
+        // ابزارهای کمکی نمایش اعداد و کسرها
+        // ==========================================
+        function toFa(val) {
+            if (val === null || val === undefined) return '';
+            const digits = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
+            return val.toString().replace(/\d/g, d => digits[d]);
+        }
+
+        function toEn(str) {
+            if (!str) return '';
+            return str.toString()
+                .replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d))
+                .replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d))
+                .trim();
+        }
+
+        function frac(num, den) {
+            return `<span class="fraction"><span class="num">${toFa(num)}</span><span class="den">${toFa(den)}</span></span>`;
+        }
+
+        function showToast(msg) {
+            const el = document.getElementById('toast-box');
+            el.textContent = msg;
+            el.classList.remove('opacity-0');
+            el.classList.add('opacity-100');
+            setTimeout(() => {
+                el.classList.remove('opacity-100');
+                el.classList.add('opacity-0');
+            }, 3000);
+        }
+
+        // ==========================================
+        // گرافیک SVG سه شخصیت پسر کارتونی
+        // ==========================================
+        const BOY_AVATARS = [
+            // آواتار ۰: آرش کاوشگر (کلاه سبز ماجراجو)
+            `<svg viewBox="0 0 100 130" class="w-full h-full drop-shadow-sm">
+                <!-- پاها -->
+                <rect x="34" y="96" width="12" height="22" rx="5" fill="#1e3a8a"/>
+                <rect x="54" y="96" width="12" height="22" rx="5" fill="#1e3a8a"/>
+                <ellipse cx="38" cy="120" rx="9" ry="5" fill="#ef4444"/>
+                <ellipse cx="62" cy="120" rx="9" ry="5" fill="#ef4444"/>
+                <!-- بدن و تی‌شرت -->
+                <rect x="28" y="58" width="44" height="42" rx="14" fill="#10b981"/>
+                <circle cx="50" cy="76" r="8" fill="#fef08a"/>
+                <!-- دست‌ها -->
+                <rect x="16" y="62" width="12" height="28" rx="6" fill="#fed7aa"/>
+                <rect x="72" y="62" width="12" height="28" rx="6" fill="#fed7aa"/>
+                <!-- سر -->
+                <circle cx="50" cy="36" r="22" fill="#fed7aa"/>
+                <!-- چشم‌ها و لبخند -->
+                <circle cx="43" cy="36" r="3" fill="#1e293b"/>
+                <circle cx="57" cy="36" r="3" fill="#1e293b"/>
+                <path d="M 43 44 Q 50 51 57 44" stroke="#9a3412" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <!-- کلاه ماجراجو -->
+                <path d="M 26 26 Q 50 6 74 26 Z" fill="#059669"/>
+                <rect x="22" y="23" width="56" height="6" rx="3" fill="#f59e0b"/>
+            </svg>`,
+
+            // آواتار ۱: پارسا باهوش (عینک گرد و لباس آبی)
+            `<svg viewBox="0 0 100 130" class="w-full h-full drop-shadow-sm">
+                <rect x="34" y="96" width="12" height="22" rx="5" fill="#334155"/>
+                <rect x="54" y="96" width="12" height="22" rx="5" fill="#334155"/>
+                <ellipse cx="38" cy="120" rx="9" ry="5" fill="#0284c7"/>
+                <ellipse cx="62" cy="120" rx="9" ry="5" fill="#0284c7"/>
+                <rect x="28" y="58" width="44" height="42" rx="14" fill="#3b82f6"/>
+                <polygon points="50,60 44,72 56,72" fill="#ffffff"/>
+                <rect x="16" y="62" width="12" height="28" rx="6" fill="#fed7aa"/>
+                <rect x="72" y="62" width="12" height="28" rx="6" fill="#fed7aa"/>
+                <circle cx="50" cy="36" r="22" fill="#fed7aa"/>
+                <!-- موها -->
+                <path d="M 28 30 Q 35 10 50 14 Q 65 10 72 30 Q 60 20 40 22 Z" fill="#451a03"/>
+                <!-- عینک -->
+                <circle cx="42" cy="36" r="7" fill="#ffffff" fill-opacity="0.5" stroke="#1e293b" stroke-width="2.2"/>
+                <circle cx="58" cy="36" r="7" fill="#ffffff" fill-opacity="0.5" stroke="#1e293b" stroke-width="2.2"/>
+                <line x1="49" y1="36" x2="51" y2="36" stroke="#1e293b" stroke-width="2.2"/>
+                <circle cx="42" cy="36" r="2.5" fill="#1e293b"/>
+                <circle cx="58" cy="36" r="2.5" fill="#1e293b"/>
+                <path d="M 44 46 Q 50 51 56 46" stroke="#9a3412" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>`,
+
+            // آواتار ۲: کیان قهرمان (شنل قرمز و لباس طلایی)
+            `<svg viewBox="0 0 100 130" class="w-full h-full drop-shadow-sm">
+                <!-- شنل قرمز -->
+                <path d="M 25 60 L 14 108 L 86 108 L 75 60 Z" fill="#ef4444"/>
+                <rect x="34" y="96" width="12" height="22" rx="5" fill="#1e293b"/>
+                <rect x="54" y="96" width="12" height="22" rx="5" fill="#1e293b"/>
+                <ellipse cx="38" cy="120" rx="9" ry="5" fill="#f59e0b"/>
+                <ellipse cx="62" cy="120" rx="9" ry="5" fill="#f59e0b"/>
+                <rect x="28" y="58" width="44" height="42" rx="14" fill="#f59e0b"/>
+                <polygon points="50,65 53,73 61,73 55,78 57,86 50,81 43,86 45,78 39,73 47,73" fill="#ffffff"/>
+                <rect x="16" y="62" width="12" height="28" rx="6" fill="#fed7aa"/>
+                <rect x="72" y="62" width="12" height="28" rx="6" fill="#fed7aa"/>
+                <circle cx="50" cy="36" r="22" fill="#fed7aa"/>
+                <!-- موهای فشن -->
+                <path d="M 28 28 L 36 12 L 45 20 L 53 10 L 62 20 L 72 28 Z" fill="#1e293b"/>
+                <circle cx="43" cy="36" r="3" fill="#1e293b"/>
+                <circle cx="57" cy="36" r="3" fill="#1e293b"/>
+                <path d="M 42 44 Q 50 52 58 44" stroke="#9a3412" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+            </svg>`
+        ];
+
+        // مختصات درصدی ۱۰ درخت روی مسیر باغ (از راست پایین به بالا چپ)
+        const TREE_POSITIONS = [
+            { left: 86, top: 82 }, // درخت ۱
+            { left: 71, top: 73 }, // درخت ۲
+            { left: 50, top: 77 }, // درخت ۳
+            { left: 26, top: 66 }, // درخت ۴
+            { left: 27, top: 46 }, // درخت ۵
+            { left: 53, top: 51 }, // درخت ۶
+            { left: 78, top: 39 }, // درخت ۷
+            { left: 73, top: 24 }, // درخت ۸
+            { left: 50, top: 26 }, // درخت ۹
+            { left: 27, top: 27 }  // درخت ۱۰
+        ];
+
+        // ==========================================
+        // بانک سؤالات پیش‌فرض (جمع کسرهای پایه چهارم)
+        // ==========================================
+        const DEFAULT_LESSON_TITLE = 'ریاضی پایه چهارم • جمع کسرها';
+
+        const DEFAULT_QUESTIONS = [
+            {
+                id: 1,
+                type: 'shape',
+                shapeType: 'circle',
+                totalParts: 6,
+                targetParts: 5,
+                f1Num: 2, f1Den: 6,
+                f2Num: 3, f2Den: 6,
+                prompt: `به دو پیتزای زیر نگاه کن! اولی ${frac(2, 6)} و دومی ${frac(3, 6)} است. روی دایره سفید کلیک کن و به اندازه حاصل جمع این دو کسر را رنگ‌آمیزی کن:`,
+                hint: 'هر پیتزا ۶ برش دارد. ۲ برش + ۳ برش چند برش می‌شود؟',
+                explanation: `وقتی مخرج‌ها مساوی هستند، صورت‌ها را جمع می‌کنیم: ۲ + ۳ = ۵. پس باید ۵ قسمت از ۶ قسمت شکل را رنگ کنی (${frac(5, 6)}).`
+            },
+            {
+                id: 2,
+                type: 'mcq',
+                prompt: `حاصل عبارت روبه‌رو کدام گزینه است؟ &nbsp; ${frac(2, 7)} + ${frac(4, 7)} = ؟`,
+                options: ['۶ چهاردهم (۶/۱۴)', '۶ هفتم (۶/۷)', '۲ هفتم (۲/۷)', '۸ هفتم (۸/۷)'],
+                optionsHTML: [frac(6, 14), frac(6, 7), frac(2, 7), frac(8, 7)],
+                correctIndex: 1,
+                hint: 'در جمع کسرهای هم‌مخرج، مخرج‌ها با هم جمع نمی‌شوند!',
+                explanation: `مخرج‌ها مساوی و برابر ۷ هستند، پس مخرج تغییر نمی‌کند و فقط صورت‌ها جمع می‌شوند: ۲ + ۴ = ۶. پاسخ درست ${frac(6, 7)} است.`
+            },
+            {
+                id: 3,
+                type: 'fill',
+                eqPrompt: `${frac(3, 8)} + ${frac(4, 8)} = `,
+                ansNum: 7,
+                ansDen: 8,
+                prompt: `حاصل جمع دو کسر هم‌مخرج زیر را در جای خالی بنویس:`,
+                hint: 'صورت‌ها (۳ و ۴) را جمع کن و مخرج (۸) را بنویس.',
+                explanation: `۳ هشتم به اضافه ۴ هشتم برابر است با ${frac(7, 8)}.`
+            },
+            {
+                id: 4,
+                type: 'shape',
+                shapeType: 'rect',
+                totalParts: 5,
+                targetParts: 5,
+                f1Num: 1, f1Den: 5,
+                f2Num: 4, f2Den: 5,
+                prompt: `حاصل جمع ${frac(1, 5)} + ${frac(4, 5)} را روی تخته شکلات سفید رنگ‌آمیزی کن:`,
+                hint: '۱ قسمت به اضافه ۴ قسمت می‌شود ۵ قسمت از ۵ قسمت (یک واحد کامل)!',
+                explanation: `${frac(1, 5)} + ${frac(4, 5)} = ${frac(5, 5)} که برابر با یک واحد کامل است و تمام ۵ قسمت شکل رنگ می‌شود.`
+            },
+            {
+                id: 5,
+                type: 'mcq',
+                prompt: `کدام کسر با حاصل جمع &nbsp; ${frac(3, 10)} + ${frac(6, 10)} &nbsp; برابر است؟`,
+                options: ['۹ بیستم (۹/۲۰)', '۳ دهم (۳/۱۰)', '۹ دهم (۹/۱۰)', '۱۰ نهم (۱۰/۹)'],
+                optionsHTML: [frac(9, 20), frac(3, 10), frac(9, 10), frac(10, 9)],
+                correctIndex: 2,
+                hint: '۳ + ۶ در صورت و ۱۰ در مخرج قرار می‌گیرد.',
+                explanation: `در جمع کسرهای هم‌مخرج، صورت‌ها جمع می‌شوند (۳ + ۶ = ۹) و مخرج همان ۱۰ باقی می‌ماند: ${frac(9, 10)}.`
+            },
+            {
+                id: 6,
+                type: 'shape',
+                shapeType: 'circle',
+                totalParts: 4,
+                targetParts: 3,
+                f1Num: 1, f1Den: 2,
+                f2Num: 1, f2Den: 4,
+                prompt: `نصف پیتزا (${frac(1, 2)}) را با یک‌چهارم پیتزا (${frac(1, 4)}) جمع بزن و حاصل را روی دایره ۴ قسمتی رنگ کن:`,
+                hint: 'نصف پیتزا همان ۲ برش از ۴ برش (۲/۴) است!',
+                explanation: `کسر ${frac(1, 2)} مساوی با ${frac(2, 4)} است. حالا ${frac(2, 4)} + ${frac(1, 4)} = ${frac(3, 4)} (۳ قسمت از ۴ قسمت).`
+            },
+            {
+                id: 7,
+                type: 'fill',
+                eqPrompt: `${frac(1, 3)} + ${frac(2, 6)} = `,
+                ansNum: 4,
+                ansDen: 6,
+                prompt: `ابتدا مخرج‌ها را مساوی کن و سپس حاصل جمع را در جای خالی بنویس:`,
+                hint: 'صورت و مخرج ۱/۳ را در ۲ ضرب کن تا تبدیل به ۲/۶ شود.',
+                explanation: `کسر ${frac(1, 3)} را به ${frac(2, 6)} تبدیل می‌کنیم؛ سپس ${frac(2, 6)} + ${frac(2, 6)} = ${frac(4, 6)}.`
+            },
+            {
+                id: 8,
+                type: 'mcq',
+                prompt: `حاصل عبارت &nbsp; ${frac(2, 5)} + ${frac(3, 10)} &nbsp; کدام گزینه است؟`,
+                options: ['۵ پانزدهم (۵/۱۵)', '۵ دهم (۵/۱۰)', '۷ دهم (۷/۱۰)', '۶ دهم (۶/۱۰)'],
+                optionsHTML: [frac(5, 15), frac(5, 10), frac(7, 10), frac(6, 10)],
+                correctIndex: 2,
+                hint: '۲/۵ برابر با ۴/۱۰ است.',
+                explanation: `صورت و مخرج ${frac(2, 5)} را در ۲ ضرب می‌کنیم تا شود ${frac(4, 10)}. حالا ${frac(4, 10)} + ${frac(3, 10)} = ${frac(7, 10)}.`
+            },
+            {
+                id: 9,
+                type: 'shape',
+                shapeType: 'rect',
+                totalParts: 8,
+                targetParts: 7,
+                f1Num: 3, f1Den: 8,
+                f2Num: 4, f2Den: 8,
+                prompt: `مجموع ${frac(3, 8)} و ${frac(4, 8)} را روی شکل مستطیلی ۸ قسمتی رنگ‌آمیزی کن:`,
+                hint: '۳ خانه + ۴ خانه = ۷ خانه از ۸ خانه.',
+                explanation: `${frac(3, 8)} + ${frac(4, 8)} = ${frac(7, 8)}؛ یعنی ۷ قسمت از ۸ قسمت شکل باید رنگ شود.`
+            },
+            {
+                id: 10,
+                type: 'mcq',
+                prompt: `سارا روز اول ${frac(1, 4)} کتابش را خواند و روز دوم ${frac(3, 8)} آن را مطالعه کرد. او در مجموع چه کسری از کتاب را خوانده است؟`,
+                options: ['۴ دوازدهم (۴/۱۲)', '۴ هشتم (۴/۸)', '۵ هشتم (۵/۸)', '۶ هشتم (۶/۸)'],
+                optionsHTML: [frac(4, 12), frac(4, 8), frac(5, 8), frac(6, 8)],
+                correctIndex: 2,
+                hint: '۱/۴ را به کسر هم‌مخرج با مخرج ۸ یعنی ۲/۸ تبدیل کن.',
+                explanation: `کسر ${frac(1, 4)} برابر با ${frac(2, 8)} است. جمع دو روز می‌شود: ${frac(2, 8)} + ${frac(3, 8)} = ${frac(5, 8)}.`
+            }
+        ];
+
+        // ==========================================
+        // وضعیت اصلی نرم‌افزار (Application State)
+        // ==========================================
+        let lessonTitle = DEFAULT_LESSON_TITLE;
+        let questions = [];
+        let student = { name: '', className: '', avatarIdx: 0 };
+        let gameState = {
+            currentTreeIdx: 0,      // ایندکس درخت فعال بعدی
+            activeModalIdx: 0,      // درختی که مودال آن باز است
+            results: [],            // آرایه‌ای از { answered, isCorrect, userAnswer, userDisplay }
+            streak: 0,              // پاسخ‌های درست متوالی
+            maxStreak: 0,
+            points: 0,              // امتیاز کل (با پاداش متوالی)
+            elapsedSeconds: 0,
+            timerInterval: null
+        };
+
+        // بارگذاری اولیه از localStorage
+        function loadStorageData() {
+            try {
+                const savedTitle = localStorage.getItem('kcity_lesson_title');
+                const savedQs = localStorage.getItem('kcity_questions');
+                lessonTitle = savedTitle || DEFAULT_LESSON_TITLE;
+                questions = savedQs ? JSON.parse(savedQs) : JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+            } catch (e) {
+                lessonTitle = DEFAULT_LESSON_TITLE;
+                questions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+            }
+            document.getElementById('header-lesson-subtitle').textContent = lessonTitle;
+        }
+
+        function saveStorageData() {
+            localStorage.setItem('kcity_lesson_title', lessonTitle);
+            localStorage.setItem('kcity_questions', JSON.stringify(questions));
+            document.getElementById('header-lesson-subtitle').textContent = lessonTitle;
+        }
+
+        // مقداردهی آواتارها در صفحه ورود
+        window.onload = function () {
+            loadStorageData();
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`avatar-preview-${i}`).innerHTML = BOY_AVATARS[i];
+            }
+            selectAvatar(0);
+        };
+
+        // ==========================================
+        // توابع صفحه ورود دانش‌آموز
+        // ==========================================
+        function handleClassSelectChange(val) {
+            const customInput = document.getElementById('input-custom-class');
+            if (val === 'custom') {
+                customInput.classList.remove('hidden');
+                customInput.required = true;
+            } else {
+                customInput.classList.add('hidden');
+                customInput.required = false;
+            }
+        }
+
+        function selectAvatar(idx) {
+            student.avatarIdx = idx;
+            document.querySelectorAll('.avatar-card').forEach((card, i) => {
+                if (i === idx) {
+                    card.className = 'avatar-card border-3 border-emerald-500 bg-emerald-50/80 rounded-2xl p-3 sm:p-4 text-center transition transform scale-105 cursor-pointer shadow-md';
+                } else {
+                    card.className = 'avatar-card border-2 border-slate-200 bg-white hover:bg-slate-50 rounded-2xl p-3 sm:p-4 text-center transition cursor-pointer opacity-80 hover:opacity-100';
+                }
+            });
+        }
+
+        function startAdventure(e) {
+            e.preventDefault();
+            const nameVal = document.getElementById('input-student-name').value.trim();
+            if (!nameVal) {
+                showToast('لطفاً نام خودت را وارد کن!');
+                return;
+            }
+
+            const classSelect = document.getElementById('select-student-class').value;
+            const classVal = classSelect === 'custom'
+                ? (document.getElementById('input-custom-class').value.trim() || 'چهارم')
+                : classSelect;
+
+            student.name = nameVal;
+            student.className = classVal;
+
+            initGameSession();
+
+            document.getElementById('screen-login').classList.add('hidden');
+            document.getElementById('screen-report').classList.add('hidden');
+            document.getElementById('screen-garden').classList.remove('hidden');
+            document.getElementById('btn-back-home').classList.remove('hidden');
+        }
+
+        function confirmReturnHome() {
+            stopTimer();
+            document.getElementById('screen-garden').classList.add('hidden');
+            document.getElementById('screen-report').classList.add('hidden');
+            document.getElementById('btn-back-home').classList.add('hidden');
+            document.getElementById('screen-login').classList.remove('hidden');
+        }
+
+        // ==========================================
+        // راه‌اندازی محیط باغ و حرکت کاراکتر
+        // ==========================================
+        function initGameSession() {
+            stopTimer();
+            gameState = {
+                currentTreeIdx: 0,
+                activeModalIdx: 0,
+                results: questions.map(() => ({
+                    answered: false,
+                    isCorrect: false,
+                    userAnswer: null,
+                    userDisplay: ''
+                })),
+                streak: 0,
+                maxStreak: 0,
+                points: 0,
+                elapsedSeconds: 0,
+                timerInterval: null
+            };
+
+            // تنظیم HUD
+            document.getElementById('hud-avatar-mini').innerHTML = BOY_AVATARS[student.avatarIdx];
+            document.getElementById('hud-student-name').textContent = student.name;
+            document.getElementById('hud-student-class').textContent = `کلاس ${student.className}`;
+
+            // قرار دادن کاراکتر در نقطه شروع باغ
+            const charEl = document.getElementById('garden-character');
+            charEl.innerHTML = BOY_AVATARS[student.avatarIdx];
+            charEl.style.left = '93%';
+            charEl.style.top = '86%';
+
+            document.getElementById('garden-guide-text').textContent =
+                `سلام ${student.name}! روی درخت شماره ۱ که می‌درخشد کلیک کن تا به سمت آن حرکت کنیم!`;
+
+            updateGardenHUD();
+            renderGardenTrees();
+            startTimer();
+        }
+
+        function startTimer() {
+            gameState.timerInterval = setInterval(() => {
+                gameState.elapsedSeconds++;
+                const formatted = formatDuration(gameState.elapsedSeconds);
+                document.getElementById('hud-timer').textContent = formatted;
+                document.getElementById('modal-timer').textContent = formatted;
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (gameState.timerInterval) {
+                clearInterval(gameState.timerInterval);
+                gameState.timerInterval = null;
+            }
+        }
+
+        function formatDuration(sec) {
+            const m = Math.floor(sec / 60).toString().padStart(2, '0');
+            const s = (sec % 60).toString().padStart(2, '0');
+            return `${toFa(m)}:${toFa(s)}`;
+        }
+
+        function updateGardenHUD() {
+            const total = questions.length;
+            const answeredCount = gameState.results.filter(r => r.answered).length;
+            const starsCount = gameState.results.filter(r => r.isCorrect).length;
+
+            document.getElementById('hud-stars').textContent = `${toFa(starsCount)} / ${toFa(total)}`;
+            document.getElementById('hud-streak').textContent = toFa(gameState.streak);
+            document.getElementById('hud-points').textContent = toFa(gameState.points);
+
+            // افکت ویژه هنگام داشتن پاسخ متوالی
+            const streakBox = document.getElementById('hud-streak-box');
+            if (gameState.streak >= 2) {
+                streakBox.classList.add('ring-2', 'ring-orange-400', 'scale-105');
+            } else {
+                streakBox.classList.remove('ring-2', 'ring-orange-400', 'scale-105');
+            }
+
+            document.getElementById('hud-progress-label').textContent = `پیشرفت: ${toFa(answeredCount)} از ${toFa(total)} درخت`;
+            document.getElementById('hud-progress-bar').style.width = `${(answeredCount / total) * 100}%`;
+
+            if (answeredCount === total) {
+                document.getElementById('btn-early-report').classList.remove('hidden');
+            } else {
+                document.getElementById('btn-early-report').classList.add('hidden');
+            }
+        }
+
+        // ساخت درخت‌های ۱۰ مرحله روی نقشه باغ
+        function renderGardenTrees() {
+            const layer = document.getElementById('garden-trees-layer');
+            layer.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                // اگر معلم بیشتر از ۱۰ سؤال اضافه کرده بود، مختصات چرخشی محاسبه شود
+                const pos = TREE_POSITIONS[idx % TREE_POSITIONS.length];
+                const res = gameState.results[idx];
+                const isUnlocked = idx <= gameState.currentTreeIdx;
+                const isCurrent = idx === gameState.currentTreeIdx && !res.answered;
+
+                const treeBtn = document.createElement('button');
+                treeBtn.type = 'button';
+                treeBtn.style.left = `${pos.left}%`;
+                treeBtn.style.top = `${pos.top}%`;
+
+                let stateClasses = 'absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center group transition-transform focus:outline-none ';
+                if (isCurrent) {
+                    stateClasses += 'tree-active-pulse cursor-pointer z-20';
+                } else if (isUnlocked) {
+                    stateClasses += 'hover:scale-110 cursor-pointer z-10';
+                } else {
+                    stateClasses += 'opacity-70 cursor-not-allowed z-10';
+                }
+                treeBtn.className = stateClasses;
+
+                treeBtn.onclick = () => handleTreeClick(idx);
+
+                // رنگ تاج درخت بر اساس وضعیت
+                let canopyColor = '#22c55e'; // سبز استاندارد
+                let badgeHTML = `<span class="px-2 py-0.5 rounded-full bg-slate-800/80 text-white text-[10px] sm:text-xs font-black shadow">درخت ${toFa(idx + 1)}</span>`;
+
+                if (res.answered && res.isCorrect) {
+                    canopyColor = '#10b981';
+                    badgeHTML = `<span class="px-2 py-0.5 rounded-full bg-amber-400 text-amber-950 text-[10px] sm:text-xs font-black shadow border border-white">⭐ ${toFa(idx + 1)}</span>`;
+                } else if (res.answered && !res.isCorrect) {
+                    canopyColor = '#f97316';
+                    badgeHTML = `<span class="px-2 py-0.5 rounded-full bg-rose-500 text-white text-[10px] sm:text-xs font-black shadow">✔️ ${toFa(idx + 1)}</span>`;
+                } else if (!isUnlocked) {
+                    canopyColor = '#64748b';
+                    badgeHTML = `<span class="px-2 py-0.5 rounded-full bg-slate-700 text-slate-200 text-[10px] sm:text-xs font-bold shadow">🔒 ${toFa(idx + 1)}</span>`;
+                } else if (isCurrent) {
+                    canopyColor = '#16a34a';
+                    badgeHTML = `<span class="px-2.5 py-0.5 rounded-full bg-amber-500 text-white text-[10px] sm:text-xs font-black shadow-md animate-bounce">✨ درخت ${toFa(idx + 1)}</span>`;
+                }
+
+                treeBtn.innerHTML = `
+                    <svg viewBox="0 0 80 90" class="w-14 h-16 sm:w-20 sm:h-24 drop-shadow-md">
+                        <!-- تنه درخت -->
+                        <rect x="33" y="52" width="14" height="30" rx="4" fill="#78350f"/>
+                        <!-- تاج درخت -->
+                        <circle cx="40" cy="36" r="24" fill="${canopyColor}"/>
+                        <circle cx="25" cy="44" r="16" fill="${canopyColor}"/>
+                        <circle cx="55" cy="44" r="16" fill="${canopyColor}"/>
+                        <!-- میوه‌های سیب روی درخت بازشده -->
+                        ${isUnlocked ? `
+                            <circle cx="32" cy="30" r="3.5" fill="#ef4444"/>
+                            <circle cx="48" cy="38" r="3.5" fill="#ef4444"/>
+                            <circle cx="38" cy="46" r="3.5" fill="#fbbf24"/>
+                        ` : ''}
+                    </svg>
+                    <div class="-mt-1">${badgeHTML}</div>
+                `;
+
+                layer.appendChild(treeBtn);
+            });
+        }
+
+        // کلیک روی یک درخت و حرکت آدمک به پای آن
+        function handleTreeClick(idx) {
+            if (idx > gameState.currentTreeIdx) {
+                showToast(`اول باید درخت شماره ${toFa(gameState.currentTreeIdx + 1)} را کامل کنی!`);
+                return;
+            }
+
+            const pos = TREE_POSITIONS[idx % TREE_POSITIONS.length];
+            const charEl = document.getElementById('garden-character');
+
+            // فعال‌سازی انیمیشن راه رفتن
+            charEl.classList.remove('character-idle');
+            charEl.classList.add('character-walking');
+
+            // حرکت آدمک به کنار درخت انتخاب‌شده
+            charEl.style.left = `${Math.min(95, pos.left + 4)}%`;
+            charEl.style.top = `${Math.min(92, pos.top + 5)}%`;
+
+            // باز شدن پنجره سؤال پس از رسیدن کاراکتر
+            setTimeout(() => {
+                charEl.classList.remove('character-walking');
+                charEl.classList.add('character-idle');
+                openQuestionModal(idx);
+            }, 780);
+        }
+
+        // ==========================================
+        // پنجره تعاملی پاسخ به سؤال
+        // ==========================================
+        let tempShapePieces = [];
+        let tempSelectedMcq = null;
+
+        function openQuestionModal(idx) {
+            gameState.activeModalIdx = idx;
+            const q = questions[idx];
+            const res = gameState.results[idx];
+
+            document.getElementById('modal-tree-badge').textContent = `🌳 ${toFa(idx + 1)}`;
+            document.getElementById('modal-question-title').textContent = `معمای درخت شماره ${toFa(idx + 1)} از ${toFa(questions.length)}`;
+
+            const typeNames = {
+                mcq: 'سؤال چهارگزینه‌ای 🧩',
+                fill: 'سؤال کامل‌کردنی ✏️',
+                shape: 'کار با اشکال هندسی تعاملی 🎨'
+            };
+            document.getElementById('modal-question-type').textContent = typeNames[q.type] || 'تمرین تعاملی';
+            document.getElementById('modal-progress-bar').style.width = `${((idx + 1) / questions.length) * 100}%`;
+            document.getElementById('modal-guide-hint').textContent = q.hint || 'با دقت فکر کن و پاسخ درست را ثبت کن!';
+            document.getElementById('modal-question-prompt').innerHTML = q.prompt;
+
+            const area = document.getElementById('modal-interaction-area');
+            area.innerHTML = '';
+
+            // الف) سؤال چهارگزینه‌ای
+            if (q.type === 'mcq') {
+                tempSelectedMcq = res.answered ? res.userAnswer : null;
+                const letters = ['الف', 'ب', 'ج', 'د'];
+                const grid = document.createElement('div');
+                grid.className = 'grid grid-cols-1 sm:grid-cols-2 gap-3';
+
+                q.options.forEach((optText, oIdx) => {
+                    const displayHTML = (q.optionsHTML && q.optionsHTML[oIdx]) ? q.optionsHTML[oIdx] : optText;
+                    const isSelected = tempSelectedMcq === oIdx;
+
+                    const btn = document.createElement('button');
+                    btn.type = 'button';
+                    btn.disabled = res.answered;
+                    btn.onclick = () => {
+                        tempSelectedMcq = oIdx;
+                        renderMcqSelection();
+                    };
+                    btn.dataset.optIdx = oIdx;
+                    btn.className = `mcq-opt-btn p-4 rounded-2xl border-2 transition flex items-center justify-between gap-3 cursor-pointer ${
+                        isSelected ? 'border-emerald-600 bg-emerald-50 shadow-sm' : 'border-slate-200 hover:border-emerald-300 bg-white'
+                    }`;
+                    btn.innerHTML = `
+                        <span class="w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs ${
+                            isSelected ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600'
+                        }">${letters[oIdx]}</span>
+                        <div class="text-lg sm:text-xl font-black text-slate-800 flex-grow text-center">${displayHTML}</div>
+                    `;
+                    grid.appendChild(btn);
+                });
+                area.appendChild(grid);
+            }
+
+            // ب) سؤال کامل‌کردنی (صورت و مخرج)
+            else if (q.type === 'fill') {
+                const savedNum = (res.answered && res.userAnswer) ? res.userAnswer.num : '';
+                const savedDen = (res.answered && res.userAnswer) ? res.userAnswer.den : '';
+
+                area.innerHTML = `
+                    <div class="bg-sky-50/70 border-2 border-sky-200 rounded-3xl p-6 flex flex-col sm:flex-row items-center justify-center gap-4 text-2xl font-black">
+                        <div>${q.eqPrompt || ''}</div>
+                        <div class="inline-flex flex-col items-center bg-white p-3.5 rounded-2xl border-2 border-emerald-400 shadow-sm">
+                            <input type="text" id="fill-input-num" inputmode="numeric" maxlength="3" placeholder="صورت"
+                                value="${savedNum}" ${res.answered ? 'disabled' : ''}
+                                class="w-20 h-11 text-center font-black text-xl rounded-xl border-2 border-slate-200 focus:border-emerald-500 outline-none text-emerald-700">
+                            <div class="w-24 h-1 bg-slate-800 rounded-full my-2"></div>
+                            <input type="text" id="fill-input-den" inputmode="numeric" maxlength="3" placeholder="مخرج"
+                                value="${savedDen}" ${res.answered ? 'disabled' : ''}
+                                class="w-20 h-11 text-center font-black text-xl rounded-xl border-2 border-slate-200 focus:border-emerald-500 outline-none text-emerald-700">
+                        </div>
+                    </div>
+                `;
+            }
+
+            // ج) سؤال کار با اشکال هندسی تعاملی
+            else if (q.type === 'shape') {
+                if (res.answered && Array.isArray(res.userAnswer)) {
+                    tempShapePieces = [...res.userAnswer];
+                } else {
+                    tempShapePieces = new Array(q.totalParts).fill(false);
+                }
+                renderInteractiveShapeArea(q, res.answered);
+            }
+
+            // تنظیم وضعیت دکمه‌ها و بازخورد در صورت پاسخ قبلی
+            const fbBox = document.getElementById('modal-feedback-box');
+            const submitBtn = document.getElementById('btn-submit-answer');
+            const contBtn = document.getElementById('btn-continue-garden');
+
+            if (res.answered) {
+                submitBtn.classList.add('hidden');
+                contBtn.classList.remove('hidden');
+                showModalFeedback(res.isCorrect, q);
+            } else {
+                fbBox.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+                contBtn.classList.add('hidden');
+            }
+
+            const modal = document.getElementById('question-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function renderMcqSelection() {
+            document.querySelectorAll('.mcq-opt-btn').forEach(btn => {
+                const oIdx = parseInt(btn.dataset.optIdx, 10);
+                const badge = btn.querySelector('span');
+                if (oIdx === tempSelectedMcq) {
+                    btn.className = 'mcq-opt-btn p-4 rounded-2xl border-2 border-emerald-600 bg-emerald-50 shadow-sm transition flex items-center justify-between gap-3 cursor-pointer';
+                    badge.className = 'w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs bg-emerald-600 text-white';
+                } else {
+                    btn.className = 'mcq-opt-btn p-4 rounded-2xl border-2 border-slate-200 hover:border-emerald-300 bg-white transition flex items-center justify-between gap-3 cursor-pointer';
+                    badge.className = 'w-8 h-8 rounded-xl flex items-center justify-center font-black text-xs bg-slate-100 text-slate-600';
+                }
+            });
+        }
+
+        // رسم شکل تعاملی (دایره پیتزا یا مستطیل شکلات)
+        function buildShapeSVG(shapeType, totalParts, filledState, color = '#10b981', interactive = false) {
+            const isArr = Array.isArray(filledState);
+
+            if (shapeType === 'rect') {
+                const w = 220, h = 72;
+                const pw = w / totalParts;
+                let partsHTML = '';
+                for (let i = 0; i < totalParts; i++) {
+                    const active = isArr ? filledState[i] : (i < filledState);
+                    const fill = active ? color : '#ffffff';
+                    const clickAttr = interactive ? `onclick="toggleGeoPiece(${i})" class="geo-piece"` : '';
+                    partsHTML += `<rect x="${i * pw}" y="0" width="${pw}" height="${h}" fill="${fill}" stroke="#334155" stroke-width="2.5" ${clickAttr}/>`;
+                }
+                return `<svg viewBox="-2 -2 ${w + 4} ${h + 4}" class="w-48 sm:w-56 h-auto mx-auto select-none drop-shadow-xs">${partsHTML}</svg>`;
+            } else {
+                const size = 160, cx = 80, cy = 80, r = 68;
+                let slicesHTML = '';
+                for (let i = 0; i < totalParts; i++) {
+                    const active = isArr ? filledState[i] : (i < filledState);
+                    const fill = active ? color : '#ffffff';
+                    const clickAttr = interactive ? `onclick="toggleGeoPiece(${i})" class="geo-piece"` : '';
+
+                    const a1 = (i * 360 / totalParts - 90) * Math.PI / 180;
+                    const a2 = ((i + 1) * 360 / totalParts - 90) * Math.PI / 180;
+                    const x1 = cx + r * Math.cos(a1), y1 = cy + r * Math.sin(a1);
+                    const x2 = cx + r * Math.cos(a2), y2 = cy + r * Math.sin(a2);
+                    const largeArc = (360 / totalParts) > 180 ? 1 : 0;
+
+                    slicesHTML += `<path d="M ${cx} ${cy} L ${x1} ${y1} A ${r} ${r} 0 ${largeArc} 1 ${x2} ${y2} Z" fill="${fill}" stroke="#334155" stroke-width="2.5" stroke-linejoin="round" ${clickAttr}/>`;
+                }
+                return `<svg viewBox="0 0 ${size} ${size}" class="w-36 h-36 sm:w-40 sm:h-40 mx-auto select-none drop-shadow-xs">${slicesHTML}</svg>`;
+            }
+        }
+
+        function renderInteractiveShapeArea(q, locked) {
+            const area = document.getElementById('modal-interaction-area');
+            const coloredCount = tempShapePieces.filter(Boolean).length;
+
+            // نمایش کسرهای کمکی در صورت وجود
+            const hasAddends = q.f1Num && q.f1Den && q.f2Num && q.f2Den;
+            const addendsHTML = hasAddends ? `
+                <div class="flex flex-wrap items-center justify-center gap-4 pb-4 border-b border-slate-200">
+                    <div class="text-center">
+                        ${buildShapeSVG(q.shapeType, q.f1Den, q.f1Num, '#3b82f6', false)}
+                        <div class="mt-1.5 font-black text-sm text-slate-700">${frac(q.f1Num, q.f1Den)}</div>
+                    </div>
+                    <span class="text-2xl font-black text-emerald-600">+</span>
+                    <div class="text-center">
+                        ${buildShapeSVG(q.shapeType, q.f2Den, q.f2Num, '#f59e0b', false)}
+                        <div class="mt-1.5 font-black text-sm text-slate-700">${frac(q.f2Num, q.f2Den)}</div>
+                    </div>
+                    <span class="text-2xl font-black text-emerald-600">=</span>
+                </div>
+            ` : '';
+
+            area.innerHTML = `
+                <div class="bg-slate-50 border-2 border-slate-200 rounded-3xl p-4 sm:p-5 space-y-4">
+                    ${addendsHTML}
+                    <div class="text-center bg-white p-4 rounded-2xl border-2 border-dashed border-emerald-400">
+                        <div class="text-xs font-extrabold text-emerald-700 mb-2">
+                            ${locked ? 'شکل رنگ‌شده توسط تو:' : '👇 روی قسمت‌های سفید شکل کلیک کن تا رنگ شوند:'}
+                        </div>
+                        ${buildShapeSVG(q.shapeType, q.totalParts, tempShapePieces, '#10b981', !locked)}
+                        <div class="mt-2.5 flex items-center justify-center gap-2 text-sm font-bold text-slate-700">
+                            <span>کسر رنگ‌شده:</span>
+                            <span class="text-emerald-700 font-black text-base">${frac(coloredCount, q.totalParts)}</span>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function toggleGeoPiece(pieceIdx) {
+            const q = questions[gameState.activeModalIdx];
+            if (gameState.results[gameState.activeModalIdx].answered) return;
+            tempShapePieces[pieceIdx] = !tempShapePieces[pieceIdx];
+            renderInteractiveShapeArea(q, false);
+        }
+
+        // ثبت پاسخ سؤال و محاسبه ستاره و پاداش متوالی
+        function submitTreeAnswer() {
+            const idx = gameState.activeModalIdx;
+            const q = questions[idx];
+            let isCorrect = false;
+            let userAnswer = null;
+            let userDisplay = '';
+
+            if (q.type === 'mcq') {
+                if (tempSelectedMcq === null) {
+                    showToast('اول یکی از گزینه‌ها را انتخاب کن!');
+                    return;
+                }
+                userAnswer = tempSelectedMcq;
+                userDisplay = (q.optionsHTML && q.optionsHTML[tempSelectedMcq]) ? q.optionsHTML[tempSelectedMcq] : q.options[tempSelectedMcq];
+                isCorrect = (tempSelectedMcq === q.correctIndex);
+            }
+            else if (q.type === 'fill') {
+                const rawNum = toEn(document.getElementById('fill-input-num').value);
+                const rawDen = toEn(document.getElementById('fill-input-den').value);
+                if (!rawNum || !rawDen) {
+                    showToast('لطفاً هم صورت و هم مخرج کسر را بنویس!');
+                    return;
+                }
+                const n = parseInt(rawNum, 10);
+                const d = parseInt(rawDen, 10);
+                userAnswer = { num: rawNum, den: rawDen };
+                userDisplay = frac(rawNum, rawDen);
+                isCorrect = (!isNaN(n) && !isNaN(d) && d !== 0 && (n * q.ansDen === d * q.ansNum));
+            }
+            else if (q.type === 'shape') {
+                const count = tempShapePieces.filter(Boolean).length;
+                if (count === 0) {
+                    showToast('روی شکل کلیک کن و قسمت‌های مورد نظر را رنگ کن!');
+                    return;
+                }
+                userAnswer = [...tempShapePieces];
+                userDisplay = `${frac(count, q.totalParts)} (${toFa(count)} قسمت)`;
+                isCorrect = (count === q.targetParts);
+            }
+
+            // ذخیره نتیجه سؤال
+            gameState.results[idx] = {
+                answered: true,
+                isCorrect,
+                userAnswer,
+                userDisplay
+            };
+
+            // محاسبه امتیاز و پاداش پاسخ‌های درست متوالی
+            if (isCorrect) {
+                gameState.streak++;
+                if (gameState.streak > gameState.maxStreak) gameState.maxStreak = gameState.streak;
+                const bonus = gameState.streak >= 2 ? (gameState.streak - 1) * 5 : 0;
+                gameState.points += (10 + bonus);
+            } else {
+                gameState.streak = 0;
+            }
+
+            // باز کردن درخت بعدی در باغ
+            if (idx === gameState.currentTreeIdx && gameState.currentTreeIdx < questions.length - 1) {
+                gameState.currentTreeIdx++;
+            }
+
+            // قفل کردن ورودی‌ها و نمایش بازخورد
+            document.getElementById('btn-submit-answer').classList.add('hidden');
+            const contBtn = document.getElementById('btn-continue-garden');
+            contBtn.classList.remove('hidden');
+
+            const allDone = gameState.results.every(r => r.answered);
+            contBtn.innerHTML = allDone
+                ? '🏆 پایان مسیر و دیدن کارنامه'
+                : '🌳 ادامه مسیر در باغ ⬅️';
+
+            showModalFeedback(isCorrect, q);
+            updateGardenHUD();
+            renderGardenTrees();
+        }
+
+        function showModalFeedback(isCorrect, q) {
+            const box = document.getElementById('modal-feedback-box');
+            const icon = document.getElementById('modal-feedback-icon');
+            const title = document.getElementById('modal-feedback-title');
+            const desc = document.getElementById('modal-feedback-desc');
+
+            box.classList.remove('hidden', 'bg-emerald-50', 'border-emerald-300', 'text-emerald-900', 'bg-rose-50', 'border-rose-300', 'text-rose-900');
+
+            if (isCorrect) {
+                box.classList.add('bg-emerald-50', 'border-emerald-300', 'text-emerald-900');
+                icon.textContent = gameState.streak >= 2 ? '🔥' : '⭐';
+                title.textContent = gameState.streak >= 2
+                    ? `فوق‌العاده! ${toFa(gameState.streak)} پاسخ درست پشت‌سرهم! (+${toFa((gameState.streak - 1) * 5)} امتیاز پاداش)`
+                    : 'آفرین! یک ستاره طلایی به دست آوردی!';
+                desc.innerHTML = q.explanation;
+            } else {
+                box.classList.add('bg-rose-50', 'border-rose-300', 'text-rose-900');
+                icon.textContent = '💡';
+                title.textContent = 'اشکالی نداره، یاد گرفتی!';
+                desc.innerHTML = q.explanation;
+            }
+        }
+
+        function closeQuestionModal() {
+            const modal = document.getElementById('question-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function continueToNextTree() {
+            closeQuestionModal();
+            const allDone = gameState.results.every(r => r.answered);
+            if (allDone) {
+                finishAdventure();
+            } else {
+                const nextNum = gameState.currentTreeIdx + 1;
+                document.getElementById('garden-guide-text').textContent =
+                    gameState.streak >= 2
+                        ? `آفرین! الان ${toFa(gameState.streak)} پاسخ درست متوالی داری! روی درخت شماره ${toFa(nextNum)} کلیک کن!`
+                        : `مرحله بعدی باز شد! حالا روی درخت شماره ${toFa(nextNum)} کلیک کن.`;
+            }
+        }
+
+        // ==========================================
+        // کارنامه تحلیلی جامع در پایان مسیر
+        // ==========================================
+        let generatedReportClipboard = '';
+
+        function finishAdventure() {
+            stopTimer();
+            document.getElementById('screen-garden').classList.add('hidden');
+            document.getElementById('screen-report').classList.remove('hidden');
+
+            const total = questions.length;
+            const correctCount = gameState.results.filter(r => r.isCorrect).length;
+            const wrongCount = total - correctCount;
+            const percent = Math.round((correctCount / total) * 100);
+            const score20 = Math.round(((correctCount / total) * 20) * 10) / 10;
+            const timeStr = formatDuration(gameState.elapsedSeconds);
+            const today = new Date().toLocaleDateString('fa-IR');
+
+            document.getElementById('report-lesson-title').textContent = lessonTitle;
+            document.getElementById('rep-student-name').textContent = student.name;
+            document.getElementById('rep-student-class').textContent = student.className;
+            document.getElementById('rep-date').textContent = today;
+
+            document.getElementById('rep-score-20').textContent = toFa(score20);
+            document.getElementById('rep-percent').textContent = `${toFa(percent)}٪`;
+            document.getElementById('rep-correct').textContent = toFa(correctCount);
+            document.getElementById('rep-wrong').textContent = toFa(wrongCount);
+            document.getElementById('rep-time-points').textContent = `${timeStr} | ${toFa(gameState.points)}💎`;
+
+            // تحلیل نقاط ضعف و درخت‌های نیازمند تمرین
+            const weakTrees = [];
+            gameState.results.forEach((r, i) => {
+                if (!r.isCorrect) weakTrees.push(`درخت شماره ${toFa(i + 1)}`);
+            });
+
+            const weakBox = document.getElementById('rep-weakness-box');
+            if (weakTrees.length === 0) {
+                weakBox.className = 'rounded-2xl p-4 sm:p-5 border-2 bg-emerald-50 border-emerald-300 text-emerald-900';
+                weakBox.innerHTML = `
+                    <div class="font-black text-base mb-1">🌟 تحلیل عملکرد: بی‌نقص و عالی!</div>
+                    <p class="text-xs sm:text-sm font-medium">تو به تمام ${toFa(total)} سؤال پاسخ درست دادی و هیچ نقطه ضعفی در این مبحث نداشتی. آفرین قهرمان شهر دانش!</p>
+                `;
+            } else {
+                weakBox.className = 'rounded-2xl p-4 sm:p-5 border-2 bg-amber-50 border-amber-300 text-amber-950';
+                weakBox.innerHTML = `
+                    <div class="font-black text-base mb-1">🎯 تحلیل نقاط ضعف و پیشنهاد تمرین بیشتر:</div>
+                    <p class="text-xs sm:text-sm font-medium leading-relaxed">
+                        مراحل نیازمند مرور مجدد: <strong class="text-rose-700">${weakTrees.join('، ')}</strong>.<br>
+                        پیشنهاد می‌کنیم توضیح تشریحی این درخت‌ها را در پایین با دقت بخوانی و دوباره در باغ تمرین کنی.
+                    </p>
+                `;
+            }
+
+            // ساخت متن خلاصه کارنامه برای کپی و ایمیل
+            generatedReportClipboard =
+`🌳 کارنامه سامانه تعاملی شهر دانش و هوش
+📘 مبحث: ${lessonTitle}
+👤 دانش‌آموز: ${student.name} (کلاس ${student.className})
+📅 تاریخ: ${today}
+---------------------------
+🏆 نمره از ۲۰: ${toFa(score20)}
+📊 درصد موفقیت: ${toFa(percent)}٪
+✅ پاسخ صحیح: ${toFa(correctCount)} از ${toFa(total)}
+❌ پاسخ غلط: ${toFa(wrongCount)}
+💎 امتیاز کل (با پاداش متوالی): ${toFa(gameState.points)}
+⏱️ مدت زمان پاسخگویی: ${timeStr}
+${weakTrees.length > 0 ? `⚠️ نیاز به تمرین در: ${weakTrees.join('، ')}` : '🌟 بدون اشتباه (عالی)'}`;
+
+            renderReportDetailedAnswers();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function renderReportDetailedAnswers() {
+            const list = document.getElementById('rep-detailed-list');
+            list.innerHTML = '';
+
+            questions.forEach((q, idx) => {
+                const res = gameState.results[idx];
+                let correctDisplay = '';
+                if (q.type === 'mcq') {
+                    correctDisplay = (q.optionsHTML && q.optionsHTML[q.correctIndex]) ? q.optionsHTML[q.correctIndex] : q.options[q.correctIndex];
+                } else if (q.type === 'fill') {
+                    correctDisplay = frac(q.ansNum, q.ansDen);
+                } else if (q.type === 'shape') {
+                    correctDisplay = `${frac(q.targetParts, q.totalParts)} (${toFa(q.targetParts)} قسمت از ${toFa(q.totalParts)} قسمت)`;
+                }
+
+                const card = document.createElement('div');
+                card.className = `bg-white rounded-2xl border-2 p-4 sm:p-5 shadow-xs space-y-3 ${
+                    res.isCorrect ? 'border-emerald-200' : 'border-rose-200'
+                }`;
+
+                card.innerHTML = `
+                    <div class="flex items-center justify-between">
+                        <span class="font-black text-xs sm:text-sm text-slate-600">🌳 درخت شماره ${toFa(idx + 1)}</span>
+                        ${res.isCorrect
+                            ? '<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-xs font-black">درست ⭐</span>'
+                            : '<span class="px-3 py-1 rounded-full bg-rose-100 text-rose-800 text-xs font-black">نیاز به تمرین ❌</span>'
+                        }
+                    </div>
+                    <div class="text-sm sm:text-base font-extrabold text-slate-800 leading-relaxed">${q.prompt}</div>
+                    <div class="flex flex-wrap items-center gap-3 text-xs sm:text-sm">
+                        <div class="px-3.5 py-2 rounded-xl bg-slate-50 border border-slate-200">
+                            <span class="text-slate-500">پاسخ تو: </span>
+                            <strong class="${res.isCorrect ? 'text-emerald-700' : 'text-rose-600'}">${res.userDisplay || 'بی‌پاسخ'}</strong>
+                        </div>
+                        <div class="px-3.5 py-2 rounded-xl bg-emerald-50 border border-emerald-200">
+                            <span class="text-emerald-700">پاسخ صحیح: </span>
+                            <strong class="text-emerald-900">${correctDisplay}</strong>
+                        </div>
+                    </div>
+                    <div class="bg-amber-50/80 border border-amber-200 rounded-xl p-3 text-xs sm:text-sm text-amber-950 font-medium flex items-start gap-2">
+                        <span>🦉</span>
+                        <span>${q.explanation}</span>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function copyReportText() {
+            const ta = document.createElement('textarea');
+            ta.value = generatedReportClipboard;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showToast('متن کارنامه کپی شد! حالا می‌توانید برای معلم ارسال کنید.');
+            } catch (err) {
+                showToast('خطا در کپی کردن متن.');
+            }
+            document.body.removeChild(ta);
+        }
+
+        function sendReportEmail() {
+            const teacherEmail = document.getElementById('input-teacher-email').value.trim();
+            const subject = encodeURIComponent(`کارنامه شهر دانش و هوش - ${student.name} (${student.className})`);
+            const body = encodeURIComponent(generatedReportClipboard);
+            window.location.href = `mailto:${teacherEmail}?subject=${subject}&body=${body}`;
+        }
+
+        function restartAdventure() {
+            document.getElementById('screen-report').classList.add('hidden');
+            document.getElementById('screen-garden').classList.remove('hidden');
+            initGameSession();
+        }
+
+        // ==========================================
+        // پنل مدیریت و ویرایش سؤالات معلم (رمز 1234)
+        // ==========================================
+        let editingQuestionIndex = -1;
+
+        function openTeacherLogin() {
+            document.getElementById('input-teacher-pass').value = '';
+            document.getElementById('teacher-auth-view').classList.remove('hidden');
+            document.getElementById('teacher-dashboard-view').classList.add('hidden');
+            const modal = document.getElementById('teacher-modal');
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        function closeTeacherModal() {
+            const modal = document.getElementById('teacher-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+        }
+
+        function verifyTeacherPassword(e) {
+            e.preventDefault();
+            const pass = document.getElementById('input-teacher-pass').value.trim();
+            if (pass === '1234') {
+                document.getElementById('teacher-auth-view').classList.add('hidden');
+                document.getElementById('teacher-dashboard-view').classList.remove('hidden');
+                renderTeacherDashboard();
+            } else {
+                showToast('رمز عبور اشتباه است! (رمز آزمایشی: 1234)');
+            }
+        }
+
+        function renderTeacherDashboard() {
+            document.getElementById('admin-lesson-title').value = lessonTitle;
+            document.getElementById('admin-questions-count').textContent = `لیست سؤالات آزمون (${toFa(questions.length)} سؤال)`;
+
+            const list = document.getElementById('admin-questions-list');
+            list.innerHTML = '';
+
+            const typeBadges = {
+                mcq: 'چهارگزینه‌ای',
+                fill: 'کامل‌کردنی',
+                shape: 'شکل هندسی'
+            };
+
+            questions.forEach((q, idx) => {
+                const row = document.createElement('div');
+                row.className = 'bg-white border border-slate-200 rounded-2xl p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs';
+                row.innerHTML = `
+                    <div class="space-y-1">
+                        <div class="flex items-center gap-2">
+                            <span class="px-2.5 py-0.5 rounded-lg bg-indigo-100 text-indigo-800 text-xs font-black">درخت ${toFa(idx + 1)}</span>
+                            <span class="px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-700 text-xs font-bold">${typeBadges[q.type]}</span>
+                        </div>
+                        <div class="text-xs sm:text-sm font-bold text-slate-800 line-clamp-2">${q.prompt}</div>
+                    </div>
+                    <div class="flex items-center gap-2 shrink-0">
+                        <button onclick="openQuestionEditor(${idx})" class="px-3 py-1.5 rounded-xl bg-amber-100 hover:bg-amber-200 text-amber-900 font-extrabold text-xs transition cursor-pointer">
+                            ✏️ ویرایش
+                        </button>
+                        <button onclick="deleteAdminQuestion(${idx})" class="px-3 py-1.5 rounded-xl bg-rose-100 hover:bg-rose-200 text-rose-800 font-extrabold text-xs transition cursor-pointer">
+                            🗑️ حذف
+                        </button>
+                    </div>
+                `;
+                list.appendChild(row);
+            });
+        }
+
+        function saveAdminLessonTitle() {
+            const val = document.getElementById('admin-lesson-title').value.trim();
+            if (!val) return;
+            lessonTitle = val;
+            saveStorageData();
+            showToast('عنوان درس با موفقیت ذخیره شد!');
+        }
+
+        function openQuestionEditor(idx) {
+            editingQuestionIndex = idx;
+            const box = document.getElementById('admin-editor-box');
+            box.classList.remove('hidden');
+
+            if (idx === -1) {
+                document.getElementById('admin-editor-heading').textContent = '➕ افزودن سؤال جدید';
+                document.getElementById('edit-q-type').value = 'mcq';
+                document.getElementById('edit-q-hint').value = '';
+                document.getElementById('edit-q-prompt').value = '';
+                document.getElementById('edit-q-explanation').value = '';
+                renderAdminTypeFields(null);
+            } else {
+                const q = questions[idx];
+                document.getElementById('admin-editor-heading').textContent = `✏️ ویرایش سؤال درخت شماره ${toFa(idx + 1)}`;
+                document.getElementById('edit-q-type').value = q.type;
+                document.getElementById('edit-q-hint').value = q.hint || '';
+                document.getElementById('edit-q-prompt').value = q.prompt || '';
+                document.getElementById('edit-q-explanation').value = q.explanation || '';
+                renderAdminTypeFields(q);
+            }
+            box.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        function closeQuestionEditor() {
+            document.getElementById('admin-editor-box').classList.add('hidden');
+        }
+
+        function renderAdminTypeFields(qData = null) {
+            const type = document.getElementById('edit-q-type').value;
+            const container = document.getElementById('edit-q-dynamic-fields');
+
+            if (type === 'mcq') {
+                const opts = (qData && qData.options) ? qData.options : ['', '', '', ''];
+                const corr = (qData && typeof qData.correctIndex === 'number') ? qData.correctIndex : 0;
+
+                container.innerHTML = `
+                    <div class="text-xs font-black text-slate-700 mb-2">گزینه‌ها را بنویسید و گزینه صحیح را انتخاب کنید:</div>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                        ${[0, 1, 2, 3].map(i => `
+                            <div class="flex items-center gap-2">
+                                <input type="radio" name="edit-mcq-correct" value="${i}" ${corr === i ? 'checked' : ''} class="w-4 h-4 accent-emerald-600">
+                                <input type="text" id="edit-mcq-opt-${i}" value="${opts[i] || ''}" placeholder="گزینه ${toFa(i + 1)}"
+                                    class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs sm:text-sm font-bold">
+                            </div>
+                        `).join('')}
+                    </div>
+                `;
+            } else if (type === 'fill') {
+                const eq = (qData && qData.eqPrompt) ? qData.eqPrompt : '';
+                const aNum = (qData && qData.ansNum) ? qData.ansNum : '';
+                const aDen = (qData && qData.ansDen) ? qData.ansDen : '';
+
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">عبارت معادله (مثلاً: ۲/۵ + ۱/۵ =):</label>
+                            <input type="text" id="edit-fill-eq" value="${eq}" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">عدد صورت پاسخ صحیح:</label>
+                            <input type="number" id="edit-fill-num" value="${aNum}" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">عدد مخرج پاسخ صحیح:</label>
+                            <input type="number" id="edit-fill-den" value="${aDen}" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">
+                        </div>
+                    </div>
+                `;
+            } else if (type === 'shape') {
+                const sType = (qData && qData.shapeType) ? qData.shapeType : 'circle';
+                const totalP = (qData && qData.totalParts) ? qData.totalParts : 6;
+                const targetP = (qData && qData.targetParts) ? qData.targetParts : 4;
+
+                container.innerHTML = `
+                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">نوع شکل هندسی:</label>
+                            <select id="edit-shape-type" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">
+                                <option value="circle" ${sType === 'circle' ? 'selected' : ''}>دایره (پیتزا)</option>
+                                <option value="rect" ${sType === 'rect' ? 'selected' : ''}>مستطیل (شکلات)</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">تعداد کل قسمت‌های شکل (مخرج):</label>
+                            <input type="number" min="2" max="12" id="edit-shape-total" value="${totalP}" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">تعداد قسمت‌های رنگی صحیح (صورت):</label>
+                            <input type="number" min="1" max="12" id="edit-shape-target" value="${targetP}" class="w-full px-3 py-1.5 rounded-lg border border-slate-300 text-xs font-bold">
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function saveEditedQuestion() {
+            const type = document.getElementById('edit-q-type').value;
+            const prompt = document.getElementById('edit-q-prompt').value.trim();
+            const hint = document.getElementById('edit-q-hint').value.trim();
+            const explanation = document.getElementById('edit-q-explanation').value.trim();
+
+            if (!prompt) {
+                showToast('متن صورت سؤال نمی‌تواند خالی باشد!');
+                return;
+            }
+
+            let newObj = {
+                id: editingQuestionIndex === -1 ? Date.now() : questions[editingQuestionIndex].id,
+                type,
+                prompt,
+                hint,
+                explanation
+            };
+
+            if (type === 'mcq') {
+                const options = [0, 1, 2, 3].map(i => document.getElementById(`edit-mcq-opt-${i}`).value.trim() || `گزینه ${i + 1}`);
+                const checkedRadio = document.querySelector('input[name="edit-mcq-correct"]:checked');
+                newObj.options = options;
+                newObj.correctIndex = checkedRadio ? parseInt(checkedRadio.value, 10) : 0;
+            } else if (type === 'fill') {
+                newObj.eqPrompt = document.getElementById('edit-fill-eq').value.trim();
+                newObj.ansNum = parseInt(document.getElementById('edit-fill-num').value, 10) || 1;
+                newObj.ansDen = parseInt(document.getElementById('edit-fill-den').value, 10) || 2;
+            } else if (type === 'shape') {
+                newObj.shapeType = document.getElementById('edit-shape-type').value;
+                newObj.totalParts = parseInt(document.getElementById('edit-shape-total').value, 10) || 6;
+                newObj.targetParts = parseInt(document.getElementById('edit-shape-target').value, 10) || 3;
+            }
+
+            if (editingQuestionIndex === -1) {
+                questions.push(newObj);
+                showToast('سؤال جدید به باغ اضافه شد!');
+            } else {
+                questions[editingQuestionIndex] = newObj;
+                showToast('تغییرات سؤال ذخیره شد!');
+            }
+
+            saveStorageData();
+            closeQuestionEditor();
+            renderTeacherDashboard();
+
+            // اگر دانش‌آموز در صفحه باغ بود، درخت‌ها به‌روز شوند
+            if (!document.getElementById('screen-garden').classList.contains('hidden')) {
+                initGameSession();
+            }
+        }
+
+        function deleteAdminQuestion(idx) {
+            if (questions.length <= 1) {
+                showToast('حداقل یک سؤال باید در آزمون باقی بماند!');
+                return;
+            }
+            questions.splice(idx, 1);
+            saveStorageData();
+            renderTeacherDashboard();
+            showToast('سؤال حذف شد.');
+        }
+
+        function resetDefaultQuestions() {
+            lessonTitle = DEFAULT_LESSON_TITLE;
+            questions = JSON.parse(JSON.stringify(DEFAULT_QUESTIONS));
+            saveStorageData();
+            renderTeacherDashboard();
+            showToast('تمام سؤالات به حالت پیش‌فرض جمع کسرها بازگردانده شدند.');
+        }
+
+        function exportQuestionsJSON() {
+            const payload = JSON.stringify({ lessonTitle, questions }, null, 2);
+            const ta = document.createElement('textarea');
+            ta.value = payload;
+            ta.style.position = 'fixed';
+            ta.style.left = '-9999px';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                showToast('کد کامل سؤالات (JSON) کپی شد!');
+            } catch (e) {
+                showToast('خطا در کپی کردن کد سؤالات.');
+            }
+            document.body.removeChild(ta);
+        }
+    </script>
+</body>
+</html>
